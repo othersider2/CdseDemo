@@ -69,6 +69,7 @@
 	<bean id="getContactUsingNameQueryImpl" class="com.cdse.query.GetContactUsingNameQueryImpl"/>
 	
 	 <bean name="/createContact.html" class="com.cdse.controller.ContactController" />
+	 <bean name="/updateContact.html" class="com.cdse.controller.ContactController" />
 	 <bean name="/getContact.html" class="com.cdse.controller.ContactController" />
   
 <!-- 	 <bean name="/createContact.html" class="com.cdse.controller.FileUploadDBController" > -->

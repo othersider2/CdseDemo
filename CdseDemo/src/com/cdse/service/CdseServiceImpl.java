@@ -38,13 +38,17 @@ public class CdseServiceImpl<T extends CdseEntity> implements CdseService<T> {
 
 	@Override
 	@Transactional
-	public void update(T inEntity) throws IOException {
+	public T update(String inQueryKey, T inEntity) throws IOException {
+		
+		T oldEntity = getEntityDao().get(inQueryKey, inEntity);
+		oldEntity.copy(inEntity);
 		
 		// set the state
-		inEntity.setState(EntityState.OLD);
+		oldEntity.setState(EntityState.DIRTY);
 		
-    	inEntity.populate();
-		getEntityDao().update(inEntity);
+		oldEntity.populate();
+		getEntityDao().update(oldEntity);
+		return oldEntity;
 	}
 
 	@Override

@@ -52,6 +52,20 @@ public class ContactController {
 		return model1;
 	}
 	
+	@RequestMapping(value="/updateContact.html", method = RequestMethod.POST)
+	public ModelAndView updateContactForm(@ModelAttribute("contact") Contacts contact) {
+	
+		ModelAndView model1 = null;
+		try {
+			contact = cdseService.update("matchLastName", contact);
+			model1 = new ModelAndView("UploadSuccess");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return model1;
+	}
+	
 	@RequestMapping(value="/getContact.html", method = RequestMethod.POST)
 	public ModelAndView getContactForm(@ModelAttribute("contact") Contacts contact) {
 	

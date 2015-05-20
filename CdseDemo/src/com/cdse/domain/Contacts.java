@@ -51,6 +51,7 @@ public class Contacts implements CdseEntity{
 		this.photoPart = photoPart;
 	}
 	@Id
+	@Column(name = "CONTACTID")
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer contactId;
 	
@@ -116,6 +117,13 @@ public class Contacts implements CdseEntity{
 	@Override
 	public void setState(EntityState state) {
 		this.state = state;
+	}
+	@Override
+	public <T> void copy(T inEntity) {
+		Contacts inContact = (Contacts)inEntity;
+		this.setFirstName(inContact.getFirstName());
+		this.setLastName(inContact.getLastName());
+		this.setPhotoPart(inContact.getPhotoPart());
 	}
 
 }
