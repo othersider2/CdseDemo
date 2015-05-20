@@ -1,0 +1,93 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" 
+ 	   xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util
+		http://www.springframework.org/schema/util/spring-util-3.0.xsd
+        http://www.springframework.org/schema/context 						
+        http://www.springframework.org/schema/context/spring-context.xsd 	
+        http://www.springframework.org/schema/tx 	
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <context:annotation-config/>
+    <context:component-scan base-package="com.cdse.demo"/>
+
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl"/>
+        <property name="username" value="cdsedemo"/>
+        <property name="password" value="cdsedemo"/>
+<!--         <property name="validationQuery" value="SELECT * FROM Contacts"/> -->
+    </bean>
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="com.cdse.domain"/>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+     
+ 	<bean id="HandlerMapping"  class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
+ 	
+ 	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+ 
+	 <bean id="viewResolver"
+	    	class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
+	        <property name="prefix">
+	            <value>/WEB-INF/</value>
+	        </property>
+	        <property name="suffix">
+	            <value>.jsp</value>
+	        </property>
+	 </bean>
+ 
+	<bean id="cdseService" class="com.cdse.service.CdseServiceImpl"/>
+
+	<bean id="entityDao" class="com.cdse.dao.CdseDaoImpl">
+		<property name="queryMap">
+			<map>
+				<entry key="matchLastName" value-ref="getContactUsingNameQueryImpl"/> 
+			</map>
+		</property>
+	</bean>
+
+	<bean id="getContactUsingNameQueryImpl" class="com.cdse.query.GetContactUsingNameQueryImpl"/>
+	
+	 <bean name="/createContact.html" class="com.cdse.controller.ContactController" />
+	 <bean name="/getContact.html" class="com.cdse.controller.ContactController" />
+  
+<!-- 	 <bean name="/createContact.html" class="com.cdse.controller.FileUploadDBController" > -->
+<!-- 		<property name="serviceMap"> -->
+<!-- 			<map> -->
+<!-- 				<entry key="createContact" value-ref="createContactService"/>  -->
+<!-- 				<entry key="matchLastName" value-ref="SimpleGetterService"/>  -->
+<!-- 			</map> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
+  
+<!-- 	<util:map id="servicesMap" map-class="java.util.HashMap" -->
+<!--   		key-type="java.lang.String" value-type="com.cdse.service.IService" > -->
+<!-- 		    <entry> -->
+<!-- 		        <key> -->
+<!-- 		            <value>"com.cdse.domain.Contacts"</value> -->
+<!-- 		        </key> -->
+<!-- 		        <ref bean="contactService"/> -->
+<!-- 		    </entry> -->
+<!-- 	</util:map> -->
+
+</beans>
