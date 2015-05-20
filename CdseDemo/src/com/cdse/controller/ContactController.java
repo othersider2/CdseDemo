@@ -57,7 +57,8 @@ public class ContactController {
 	
 		ModelAndView model1 = null;
 		try {
-			contact = cdseService.update("matchLastName", contact);
+			Contacts updatedContact = cdseService.update("matchLastName", contact);
+			contact.copy(updatedContact);
 			model1 = new ModelAndView("UploadSuccess");
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -70,7 +71,8 @@ public class ContactController {
 	public ModelAndView getContactForm(@ModelAttribute("contact") Contacts contact) {
 	
 		ModelAndView model1 = null;
-		contact = cdseService.get("matchLastName", contact);
+		Contacts retrievedContact = cdseService.get("matchLastName", contact);
+		contact.copy(retrievedContact);
 		model1 = new ModelAndView("DownloadSuccess");
 		
 		return model1;
