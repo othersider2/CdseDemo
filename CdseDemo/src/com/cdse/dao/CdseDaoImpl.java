@@ -35,7 +35,6 @@ public class CdseDaoImpl<T  extends CdseEntity> implements CdseDao<T> {
 
 	@Override
 	public void update(T inEntity) throws IOException {
-    	inEntity.populate();
 		sessionFactory.getCurrentSession().update(inEntity);
 	}
 

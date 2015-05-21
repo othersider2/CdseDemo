@@ -32,12 +32,7 @@ public class Role implements CdseEntity{
 	public void setRoleName(String firstName) {
 		this.firstName = firstName;
 	}
-	public List<Person> getPersonList() {
-		return personList;
-	}
-	public void setPersonList(List<Person> personList) {
-		this.personList = personList;
-	}
+
 	@Id
 	@Column(name = "ROLE_ID")
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -48,12 +43,6 @@ public class Role implements CdseEntity{
 	
 	@Transient
 	private EntityState state;
-	
-	@OneToMany(cascade=CascadeType.ALL)  
-	@JoinTable(name="PERSON_ROLE",  
-	joinColumns={@JoinColumn(name="ROLE_ID", referencedColumnName="ROLE_ID")},  
-	inverseJoinColumns={@JoinColumn(name="PERSON_ID", referencedColumnName="PERSON_ID")})  
-	private List<Person> personList;
 	
 	@Override
 	public void populate() throws IOException {
@@ -81,6 +70,11 @@ public class Role implements CdseEntity{
 	public <T> void copy(T inEntity) {
 		Role inRole = (Role)inEntity;
 		this.setRoleName(inRole.getRoleName());
+	}
+
+	@Override
+	public int getId() {
+		return getRoleId();
 	}
 
 }

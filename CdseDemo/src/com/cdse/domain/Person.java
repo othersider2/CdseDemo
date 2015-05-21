@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -57,11 +59,11 @@ public class Person implements CdseEntity{
 		this.photoPart = photoPart;
 	}
 	
-	public Role getRole() {
-		return role;
+	public Set<Role> getRoles() {
+		return roles;
 	}
-	public void setRole(Role role) {
-		this.role = role;
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
 	}
 	   
 	@Id
@@ -84,11 +86,15 @@ public class Person implements CdseEntity{
 	@Transient
 	private EntityState state;
 	
-    @OneToOne(cascade=CascadeType.ALL)  
-    @JoinTable(name="PERSON_ROLE",  
-    joinColumns={@JoinColumn(name="PERSON_ID", referencedColumnName="PERSON_ID")},  
-    inverseJoinColumns={@JoinColumn(name="ROLE_ID", referencedColumnName="ROLE_ID")})  
-    private Role role;  
+	@Transient
+	private String personIdString;
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "PERSON_ROLE", joinColumns = { 
+			@JoinColumn(name = "PERSON_ID", nullable = false, updatable = false) }, 
+			inverseJoinColumns = { @JoinColumn(name = "ROLE_ID", 
+					nullable = false, updatable = false) })
+    private Set<Role> roles = new HashSet<Role>();
     
 	@Override
 	public void populate() throws IOException {
@@ -144,6 +150,18 @@ public class Person implements CdseEntity{
 		this.setFirstName(inPerson.getFirstName());
 		this.setLastName(inPerson.getLastName());
 		this.setPhotoPart(inPerson.getPhotoPart());
+		this.setRoles(inPerson.getRoles());
+	}
+	@Override
+	public int getId() {
+		return getPersonId();
+	}
+	public String getPersonIdString() {
+		return personIdString;
+	}
+	public void setPersonIdString(String personIdString) {
+		this.personIdString = personIdString;
+        this.setPersonId(Integer.parseInt(personIdString));
 	}
 
 }

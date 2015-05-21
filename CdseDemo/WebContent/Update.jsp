@@ -14,12 +14,20 @@
 			<form action="/CdseDemo/updatePerson.html" method="post" enctype="multipart/form-data">
 	            <table border="0">
 	                <tr>
+	                    <td>Person ID: </td>
+	                    <td><input type="text" name="personIdString" size="5"/></td>
+	                </tr>
+	                <tr>
 	                    <td>First Name: </td>
 	                    <td><input type="text" name="firstName" size="50"/></td>
 	                </tr>
 	                <tr>
 	                    <td>Last Name: </td>
 	                    <td><input type="text" name="lastName" size="50"/></td>
+	                </tr>
+	                <tr>
+	                    <td>Role: </td>
+	                    <td><input type="text" name="roleName" size="50"/></td>
 	                </tr>
 	                <tr>
 	                    <td>Portrait Photo: </td>

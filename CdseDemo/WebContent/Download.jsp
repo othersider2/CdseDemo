@@ -14,6 +14,10 @@
 			<form action="/CdseDemo/getPerson.html" method="post" enctype="multipart/form-data">
 	            <table border="0">
 	                <tr>
+	                    <td>Person ID: </td>
+	                    <td><input type="text" name="personIdString" size="5"/></td>
+	                </tr>
+	                <tr>
 	                    <td>First Name: </td>
 	                    <td><input type="text" name="firstName" size="50"/></td>
 	                </tr>

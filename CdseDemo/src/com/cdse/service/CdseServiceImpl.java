@@ -47,7 +47,7 @@ public class CdseServiceImpl<T extends CdseEntity> implements CdseService<T> {
 		oldEntity.setState(EntityState.DIRTY);
 		
 		oldEntity.populate();
-		getEntityDao().update(oldEntity);
+		getEntityDao().insertOrUpdate(oldEntity);
 		return oldEntity;
 	}
 

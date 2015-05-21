@@ -47,7 +47,7 @@ public class PersonController {
 		try {
 			Role role = new Role();
 			role.setRoleName(roleName);
-			person.setRole(role);
+			person.getRoles().add(role);
 			
 			cdseService.insert(person);
 			model1 = new ModelAndView("UploadSuccess");
@@ -59,11 +59,15 @@ public class PersonController {
 	}
 	
 	@RequestMapping(value="/updatePerson.html", method = RequestMethod.POST)
-	public ModelAndView updatePersonForm(@ModelAttribute("person") Person person) {
+	public ModelAndView updatePersonForm(@ModelAttribute("person") Person person, @RequestParam("roleName") String roleName) {
 	
 		ModelAndView model1 = null;
 		try {
-			Person updatedPerson = cdseService.update("matchLastName", person);
+			Role role = new Role();
+			role.setRoleName(roleName);
+			person.getRoles().add(role);
+
+			Person updatedPerson = cdseService.update("matchId", person);
 			person.copy(updatedPerson);
 			model1 = new ModelAndView("UploadSuccess");
 		} catch (IOException e) {
@@ -77,9 +81,10 @@ public class PersonController {
 	public ModelAndView getPersonForm(@ModelAttribute("person") Person person) {
 	
 		ModelAndView model1 = null;
-		Person retrievedPerson = cdseService.get("matchLastName", person);
+		Person retrievedPerson = cdseService.get("matchId", person);
 		person.copy(retrievedPerson);
 		model1 = new ModelAndView("DownloadSuccess");
+		model1.addObject("roles", person.getRoles());
 		
 		return model1;
 	}

@@ -61,11 +61,13 @@
 	<bean id="entityDao" class="com.cdse.dao.CdseDaoImpl">
 		<property name="queryMap">
 			<map>
+				<entry key="matchId" value-ref="loadEntity"/>
 				<entry key="matchLastName" value-ref="getPersonUsingNameQueryImpl"/> 
 			</map>
 		</property>
 	</bean>
 
+	<bean id="loadEntity" class="com.cdse.query.LoadEntity"/>
 	<bean id="getPersonUsingNameQueryImpl" class="com.cdse.query.GetPersonUsingNameQueryImpl"/>
 	
 	 <bean name="/createPerson.html" class="com.cdse.controller.PersonController" />
