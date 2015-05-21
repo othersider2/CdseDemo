@@ -5,15 +5,15 @@ import java.util.List;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
-import com.cdse.domain.Contacts;
+import com.cdse.domain.Contact;
 
 @Repository
-public class GetContactUsingNameQueryImpl implements CdseQuery<Contacts> {
+public class GetContactUsingNameQueryImpl implements CdseQuery<Contact> {
 
 	@Override
-	public List<Contacts> execute(SessionFactory inSessionFactory, Contacts inSpec) {
+	public List<Contact> execute(SessionFactory inSessionFactory, Contact inSpec) {
 		@SuppressWarnings("unchecked")
-		List<Contacts> contacts = inSessionFactory.getCurrentSession().createQuery(
+		List<Contact> contacts = inSessionFactory.getCurrentSession().createQuery(
 			    "from Contacts as contact where contact.lastName = ?")
 			    .setString(0, inSpec.getLastName())
 			    .list();

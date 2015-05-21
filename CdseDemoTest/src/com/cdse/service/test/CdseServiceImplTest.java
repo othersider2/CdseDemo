@@ -19,7 +19,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import com.cdse.controller.ContactController;
 import com.cdse.dao.CdseDao;
 import com.cdse.domain.CdseEntity;
-import com.cdse.domain.Contacts;
+import com.cdse.domain.Contact;
 import com.cdse.domain.EntityState;
 import com.cdse.service.CdseServiceImpl;
 
@@ -46,10 +46,10 @@ public class CdseServiceImplTest {
 	}
 
 	@Mock
-	CdseDao<Contacts> entityDaoMock;
+	CdseDao<Contact> entityDaoMock;
 	
 	@Mock
-	Contacts contactMock;
+	Contact contactMock;
 	
 	@Test
 	public void testInsert() throws IOException {
@@ -59,7 +59,7 @@ public class CdseServiceImplTest {
 		doNothing().when(contactMock).populate();
 		
 		
-		CdseServiceImpl<Contacts> sut = new CdseServiceImpl<Contacts>();
+		CdseServiceImpl<Contact> sut = new CdseServiceImpl<Contact>();
 		sut.setEntityDao(entityDaoMock);
 		sut.insert(contactMock);
 		

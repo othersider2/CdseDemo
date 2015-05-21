@@ -16,14 +16,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.cdse.domain.Contacts;
+import com.cdse.domain.Contact;
+import com.cdse.domain.Role;
 import com.cdse.service.CdseService;
 
 @Controller
 public class ContactController {
 	
 	@Autowired
-	CdseService<Contacts> cdseService;
+	CdseService<Contact> cdseService;
 
 	@ModelAttribute
     public void addingCommonObjects(Model model1) {
@@ -39,10 +40,14 @@ public class ContactController {
 	}
 	
 	@RequestMapping(value="/createContact.html", method = RequestMethod.POST)
-	public ModelAndView submitContactForm(@ModelAttribute("contact") Contacts contact) {
+	public ModelAndView submitContactForm(@ModelAttribute("contact") Contact contact) {
 	
 		ModelAndView model1 = null;
 		try {
+			Role role = new Role();
+			role.setRoleName("Developer");
+			contact.setRole(role);
+			
 			cdseService.insert(contact);
 			model1 = new ModelAndView("UploadSuccess");
 		} catch (IOException e) {
@@ -53,11 +58,11 @@ public class ContactController {
 	}
 	
 	@RequestMapping(value="/updateContact.html", method = RequestMethod.POST)
-	public ModelAndView updateContactForm(@ModelAttribute("contact") Contacts contact) {
+	public ModelAndView updateContactForm(@ModelAttribute("contact") Contact contact) {
 	
 		ModelAndView model1 = null;
 		try {
-			Contacts updatedContact = cdseService.update("matchLastName", contact);
+			Contact updatedContact = cdseService.update("matchLastName", contact);
 			contact.copy(updatedContact);
 			model1 = new ModelAndView("UploadSuccess");
 		} catch (IOException e) {
@@ -68,10 +73,10 @@ public class ContactController {
 	}
 	
 	@RequestMapping(value="/getContact.html", method = RequestMethod.POST)
-	public ModelAndView getContactForm(@ModelAttribute("contact") Contacts contact) {
+	public ModelAndView getContactForm(@ModelAttribute("contact") Contact contact) {
 	
 		ModelAndView model1 = null;
-		Contacts retrievedContact = cdseService.get("matchLastName", contact);
+		Contact retrievedContact = cdseService.get("matchLastName", contact);
 		contact.copy(retrievedContact);
 		model1 = new ModelAndView("DownloadSuccess");
 		

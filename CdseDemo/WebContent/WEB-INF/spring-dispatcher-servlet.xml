@@ -20,7 +20,7 @@
         <property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl"/>
         <property name="username" value="cdsedemo"/>
         <property name="password" value="cdsedemo"/>
-<!--         <property name="validationQuery" value="SELECT * FROM Contacts"/> -->
+<!--         <property name="validationQuery" value="SELECT * FROM Contact"/> -->
     </bean>
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
@@ -75,7 +75,7 @@
 <!-- 	 <bean name="/createContact.html" class="com.cdse.controller.FileUploadDBController" > -->
 <!-- 		<property name="serviceMap"> -->
 <!-- 			<map> -->
-<!-- 				<entry key="createContact" value-ref="createContactService"/>  -->
+<!-- 				<entry key="createContact" value-ref="createContactervice"/>  -->
 <!-- 				<entry key="matchLastName" value-ref="SimpleGetterService"/>  -->
 <!-- 			</map> -->
 <!-- 		</property> -->
@@ -85,9 +85,9 @@
 <!--   		key-type="java.lang.String" value-type="com.cdse.service.IService" > -->
 <!-- 		    <entry> -->
 <!-- 		        <key> -->
-<!-- 		            <value>"com.cdse.domain.Contacts"</value> -->
+<!-- 		            <value>"com.cdse.domain.Contact"</value> -->
 <!-- 		        </key> -->
-<!-- 		        <ref bean="contactService"/> -->
+<!-- 		        <ref bean="Contactervice"/> -->
 <!-- 		    </entry> -->
 <!-- 	</util:map> -->
 

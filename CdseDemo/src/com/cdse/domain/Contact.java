@@ -5,21 +5,27 @@ import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
+import javax.persistence.JoinColumn;
 
 import org.springframework.web.multipart.MultipartFile;
 
 @Entity
-@Table(name="CONTACTS")
-public class Contacts implements CdseEntity{
+@Table(name="CONTACT")
+public class Contact implements CdseEntity{
 	public Integer getContactId() {
 		return contactId;
 	}
@@ -50,8 +56,16 @@ public class Contacts implements CdseEntity{
 	public void setPhotoPart(MultipartFile photoPart) {
 		this.photoPart = photoPart;
 	}
+	
+	public Role getRole() {
+		return role;
+	}
+	public void setRole(Role role) {
+		this.role = role;
+	}
+	   
 	@Id
-	@Column(name = "CONTACTID")
+	@Column(name = "CONTACT_ID")
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer contactId;
 	
@@ -70,6 +84,12 @@ public class Contacts implements CdseEntity{
 	@Transient
 	private EntityState state;
 	
+    @OneToOne(cascade=CascadeType.ALL)  
+    @JoinTable(name="CONTACT_ROLE",  
+    joinColumns={@JoinColumn(name="CONTACT_ID", referencedColumnName="CONTACT_ID")},  
+    inverseJoinColumns={@JoinColumn(name="ROLE_ID", referencedColumnName="ROLE_ID")})  
+    private Role role;  
+    
 	@Override
 	public void populate() throws IOException {
         InputStream inputStream = null; // input stream of the upload file
@@ -120,7 +140,7 @@ public class Contacts implements CdseEntity{
 	}
 	@Override
 	public <T> void copy(T inEntity) {
-		Contacts inContact = (Contacts)inEntity;
+		Contact inContact = (Contact)inEntity;
 		this.setFirstName(inContact.getFirstName());
 		this.setLastName(inContact.getLastName());
 		this.setPhotoPart(inContact.getPhotoPart());
