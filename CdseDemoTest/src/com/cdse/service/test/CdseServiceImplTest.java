@@ -16,10 +16,10 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import com.cdse.controller.ContactController;
+import com.cdse.controller.PersonController;
 import com.cdse.dao.CdseDao;
 import com.cdse.domain.CdseEntity;
-import com.cdse.domain.Contact;
+import com.cdse.domain.Person;
 import com.cdse.domain.EntityState;
 import com.cdse.service.CdseServiceImpl;
 
@@ -46,22 +46,22 @@ public class CdseServiceImplTest {
 	}
 
 	@Mock
-	CdseDao<Contact> entityDaoMock;
+	CdseDao<Person> entityDaoMock;
 	
 	@Mock
-	Contact contactMock;
+	Person personMock;
 	
 	@Test
 	public void testInsert() throws IOException {
 		
-		doNothing().when(entityDaoMock).insert(contactMock);
-		doNothing().when(contactMock).setState(EntityState.NEW);
-		doNothing().when(contactMock).populate();
+		doNothing().when(entityDaoMock).insert(personMock);
+		doNothing().when(personMock).setState(EntityState.NEW);
+		doNothing().when(personMock).populate();
 		
 		
-		CdseServiceImpl<Contact> sut = new CdseServiceImpl<Contact>();
+		CdseServiceImpl<Person> sut = new CdseServiceImpl<Person>();
 		sut.setEntityDao(entityDaoMock);
-		sut.insert(contactMock);
+		sut.insert(personMock);
 		
 		assertTrue(1==1);
 	}

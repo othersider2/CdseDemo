@@ -16,15 +16,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.cdse.domain.Contact;
+import com.cdse.domain.Person;
 import com.cdse.domain.Role;
 import com.cdse.service.CdseService;
 
 @Controller
-public class ContactController {
+public class PersonController {
 	
 	@Autowired
-	CdseService<Contact> cdseService;
+	CdseService<Person> cdseService;
 
 	@ModelAttribute
     public void addingCommonObjects(Model model1) {
@@ -39,16 +39,16 @@ public class ContactController {
 				new ByteArrayMultipartFileEditor());
 	}
 	
-	@RequestMapping(value="/createContact.html", method = RequestMethod.POST)
-	public ModelAndView submitContactForm(@ModelAttribute("contact") Contact contact) {
+	@RequestMapping(value="/createPerson.html", method = RequestMethod.POST)
+	public ModelAndView submitPersonForm(@ModelAttribute("person") Person person) {
 	
 		ModelAndView model1 = null;
 		try {
 			Role role = new Role();
 			role.setRoleName("Developer");
-			contact.setRole(role);
+			person.setRole(role);
 			
-			cdseService.insert(contact);
+			cdseService.insert(person);
 			model1 = new ModelAndView("UploadSuccess");
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -57,13 +57,13 @@ public class ContactController {
 		return model1;
 	}
 	
-	@RequestMapping(value="/updateContact.html", method = RequestMethod.POST)
-	public ModelAndView updateContactForm(@ModelAttribute("contact") Contact contact) {
+	@RequestMapping(value="/updatePerson.html", method = RequestMethod.POST)
+	public ModelAndView updatePersonForm(@ModelAttribute("person") Person person) {
 	
 		ModelAndView model1 = null;
 		try {
-			Contact updatedContact = cdseService.update("matchLastName", contact);
-			contact.copy(updatedContact);
+			Person updatedPerson = cdseService.update("matchLastName", person);
+			person.copy(updatedPerson);
 			model1 = new ModelAndView("UploadSuccess");
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -72,12 +72,12 @@ public class ContactController {
 		return model1;
 	}
 	
-	@RequestMapping(value="/getContact.html", method = RequestMethod.POST)
-	public ModelAndView getContactForm(@ModelAttribute("contact") Contact contact) {
+	@RequestMapping(value="/getPerson.html", method = RequestMethod.POST)
+	public ModelAndView getPersonForm(@ModelAttribute("person") Person person) {
 	
 		ModelAndView model1 = null;
-		Contact retrievedContact = cdseService.get("matchLastName", contact);
-		contact.copy(retrievedContact);
+		Person retrievedPerson = cdseService.get("matchLastName", person);
+		person.copy(retrievedPerson);
 		model1 = new ModelAndView("DownloadSuccess");
 		
 		return model1;

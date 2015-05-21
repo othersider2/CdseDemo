@@ -24,13 +24,13 @@ import javax.persistence.JoinColumn;
 import org.springframework.web.multipart.MultipartFile;
 
 @Entity
-@Table(name="CONTACT")
-public class Contact implements CdseEntity{
-	public Integer getContactId() {
-		return contactId;
+@Table(name="PERSON")
+public class Person implements CdseEntity{
+	public Integer getPersonId() {
+		return personId;
 	}
-	public void setContactId(Integer contactId) {
-		this.contactId = contactId;
+	public void setPersonId(Integer personId) {
+		this.personId = personId;
 	}
 	public String getFirstName() {
 		return firstName;
@@ -65,9 +65,9 @@ public class Contact implements CdseEntity{
 	}
 	   
 	@Id
-	@Column(name = "CONTACT_ID")
+	@Column(name = "PERSON_ID")
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer contactId;
+	private Integer personId;
 	
 	@Column(name = "FIRST_NAME")
 	private String firstName;
@@ -85,8 +85,8 @@ public class Contact implements CdseEntity{
 	private EntityState state;
 	
     @OneToOne(cascade=CascadeType.ALL)  
-    @JoinTable(name="CONTACT_ROLE",  
-    joinColumns={@JoinColumn(name="CONTACT_ID", referencedColumnName="CONTACT_ID")},  
+    @JoinTable(name="PERSON_ROLE",  
+    joinColumns={@JoinColumn(name="PERSON_ID", referencedColumnName="PERSON_ID")},  
     inverseJoinColumns={@JoinColumn(name="ROLE_ID", referencedColumnName="ROLE_ID")})  
     private Role role;  
     
@@ -140,10 +140,10 @@ public class Contact implements CdseEntity{
 	}
 	@Override
 	public <T> void copy(T inEntity) {
-		Contact inContact = (Contact)inEntity;
-		this.setFirstName(inContact.getFirstName());
-		this.setLastName(inContact.getLastName());
-		this.setPhotoPart(inContact.getPhotoPart());
+		Person inPerson = (Person)inEntity;
+		this.setFirstName(inPerson.getFirstName());
+		this.setLastName(inPerson.getLastName());
+		this.setPhotoPart(inPerson.getPhotoPart());
 	}
 
 }

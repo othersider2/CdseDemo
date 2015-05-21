@@ -20,7 +20,7 @@ public class CdseDaoImpl<T  extends CdseEntity> implements CdseDao<T> {
 	private Map<String, CdseQuery<T>> queryMap;
 
 	/* (non-Javadoc)
-	 * @see com.cdse.demo.dao.EntityDao#insert(com.cdse.demo.domain.Contacts)
+	 * @see com.cdse.demo.dao.EntityDao#insert(com.cdse.demo.domain.Persons)
 	 */
     @Override
 	public void insert(T inEntity) throws IOException {

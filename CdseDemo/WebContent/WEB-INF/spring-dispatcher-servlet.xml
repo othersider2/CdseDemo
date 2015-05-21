@@ -20,7 +20,7 @@
         <property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl"/>
         <property name="username" value="cdsedemo"/>
         <property name="password" value="cdsedemo"/>
-<!--         <property name="validationQuery" value="SELECT * FROM Contact"/> -->
+<!--         <property name="validationQuery" value="SELECT * FROM Person"/> -->
     </bean>
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
@@ -61,21 +61,21 @@
 	<bean id="entityDao" class="com.cdse.dao.CdseDaoImpl">
 		<property name="queryMap">
 			<map>
-				<entry key="matchLastName" value-ref="getContactUsingNameQueryImpl"/> 
+				<entry key="matchLastName" value-ref="getPersonUsingNameQueryImpl"/> 
 			</map>
 		</property>
 	</bean>
 
-	<bean id="getContactUsingNameQueryImpl" class="com.cdse.query.GetContactUsingNameQueryImpl"/>
+	<bean id="getPersonUsingNameQueryImpl" class="com.cdse.query.GetPersonUsingNameQueryImpl"/>
 	
-	 <bean name="/createContact.html" class="com.cdse.controller.ContactController" />
-	 <bean name="/updateContact.html" class="com.cdse.controller.ContactController" />
-	 <bean name="/getContact.html" class="com.cdse.controller.ContactController" />
+	 <bean name="/createPerson.html" class="com.cdse.controller.PersonController" />
+	 <bean name="/updatePerson.html" class="com.cdse.controller.PersonController" />
+	 <bean name="/getPerson.html" class="com.cdse.controller.PersonController" />
   
-<!-- 	 <bean name="/createContact.html" class="com.cdse.controller.FileUploadDBController" > -->
+<!-- 	 <bean name="/createPerson.html" class="com.cdse.controller.FileUploadDBController" > -->
 <!-- 		<property name="serviceMap"> -->
 <!-- 			<map> -->
-<!-- 				<entry key="createContact" value-ref="createContactervice"/>  -->
+<!-- 				<entry key="createPerson" value-ref="createPersonervice"/>  -->
 <!-- 				<entry key="matchLastName" value-ref="SimpleGetterService"/>  -->
 <!-- 			</map> -->
 <!-- 		</property> -->
@@ -85,9 +85,9 @@
 <!--   		key-type="java.lang.String" value-type="com.cdse.service.IService" > -->
 <!-- 		    <entry> -->
 <!-- 		        <key> -->
-<!-- 		            <value>"com.cdse.domain.Contact"</value> -->
+<!-- 		            <value>"com.cdse.domain.Person"</value> -->
 <!-- 		        </key> -->
-<!-- 		        <ref bean="Contactervice"/> -->
+<!-- 		        <ref bean="Personervice"/> -->
 <!-- 		    </entry> -->
 <!-- 	</util:map> -->
 

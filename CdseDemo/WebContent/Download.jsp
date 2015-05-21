@@ -11,7 +11,7 @@
 	<body>
 	    <center>
 	        <h1>SharpE CDSE Demo</h1>
-			<form action="/CdseDemo/getContact.html" method="post" enctype="multipart/form-data">
+			<form action="/CdseDemo/getPerson.html" method="post" enctype="multipart/form-data">
 	            <table border="0">
 	                <tr>
 	                    <td>First Name: </td>

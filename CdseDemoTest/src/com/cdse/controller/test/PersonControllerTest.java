@@ -8,11 +8,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.cdse.controller.ContactController;
+import com.cdse.controller.PersonController;
 
-public class ContactControllerTest {
+public class PersonControllerTest {
 	
-	ContactController sut;
+	PersonController sut;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -24,7 +24,7 @@ public class ContactControllerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		this.sut = new ContactController();
+		this.sut = new PersonController();
 		
 	}
 
@@ -33,12 +33,12 @@ public class ContactControllerTest {
 	}
 
 	@Test
-	public void testSubmitContactForm() {
+	public void testSubmitPersonForm() {
 		fail("Not yet implemented");
 	}
 
 	@Test
-	public void testGetContactForm() {
+	public void testGetPersonForm() {
 		fail("Not yet implemented");
 	}
 

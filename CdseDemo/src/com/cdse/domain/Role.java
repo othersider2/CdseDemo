@@ -32,11 +32,11 @@ public class Role implements CdseEntity{
 	public void setRoleName(String firstName) {
 		this.firstName = firstName;
 	}
-	public List<Contact> getContactList() {
-		return contactList;
+	public List<Person> getPersonList() {
+		return personList;
 	}
-	public void setContactList(List<Contact> contactList) {
-		this.contactList = contactList;
+	public void setPersonList(List<Person> personList) {
+		this.personList = personList;
 	}
 	@Id
 	@Column(name = "ROLE_ID")
@@ -50,10 +50,10 @@ public class Role implements CdseEntity{
 	private EntityState state;
 	
 	@OneToMany(cascade=CascadeType.ALL)  
-	@JoinTable(name="CONTACT_ROLE",  
+	@JoinTable(name="PERSON_ROLE",  
 	joinColumns={@JoinColumn(name="ROLE_ID", referencedColumnName="ROLE_ID")},  
-	inverseJoinColumns={@JoinColumn(name="CONTACT_ID", referencedColumnName="CONTACT_ID")})  
-	private List<Contact> contactList;
+	inverseJoinColumns={@JoinColumn(name="PERSON_ID", referencedColumnName="PERSON_ID")})  
+	private List<Person> personList;
 	
 	@Override
 	public void populate() throws IOException {
