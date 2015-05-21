@@ -22,6 +22,10 @@
 	                    <td><input type="text" name="lastName" size="50"/></td>
 	                </tr>
 	                <tr>
+	                    <td>Role: </td>
+	                    <td><input type="text" name="roleName" size="50"/></td>
+	                </tr>
+	                <tr>
 	                    <td>Portrait Photo: </td>
 	                    <td><input type="file" name="photoPart" size="50"/></td>
 	                </tr>

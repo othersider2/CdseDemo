@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -40,12 +41,12 @@ public class PersonController {
 	}
 	
 	@RequestMapping(value="/createPerson.html", method = RequestMethod.POST)
-	public ModelAndView submitPersonForm(@ModelAttribute("person") Person person) {
+	public ModelAndView submitPersonForm(@ModelAttribute("person") Person person, @RequestParam("roleName") String roleName) {
 	
 		ModelAndView model1 = null;
 		try {
 			Role role = new Role();
-			role.setRoleName("Developer");
+			role.setRoleName(roleName);
 			person.setRole(role);
 			
 			cdseService.insert(person);
