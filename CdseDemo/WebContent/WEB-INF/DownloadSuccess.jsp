@@ -16,6 +16,10 @@
 			<td>Last Name :</td>
 			<td>${person.lastName}</td>
 		</tr>
+		<tr>
+			<td>Roles :</td>
+			<td>${person.roles}</td>
+		</tr>
 
 	</table>
 

@@ -84,7 +84,6 @@ public class PersonController {
 		Person retrievedPerson = cdseService.get("matchId", person);
 		person.copy(retrievedPerson);
 		model1 = new ModelAndView("DownloadSuccess");
-		model1.addObject("roles", person.getRoles());
 		
 		return model1;
 	}

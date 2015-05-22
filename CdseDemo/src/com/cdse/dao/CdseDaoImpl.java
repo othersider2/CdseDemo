@@ -30,7 +30,7 @@ public class CdseDaoImpl<T  extends CdseEntity> implements CdseDao<T> {
 
 	@Override
 	public void insertOrUpdate(T inEntity) throws IOException {
-		sessionFactory.getCurrentSession().saveOrUpdate(inEntity);
+		sessionFactory.getCurrentSession().save(inEntity);
 	}
 
 	@Override

@@ -67,20 +67,16 @@ public class Person implements CdseEntity{
 	}
 	   
 	@Id
-	@Column(name = "PERSON_ID")
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue()
 	private Integer personId;
 	
-	@Column(name = "FIRST_NAME")
 	private String firstName;
 	
-	@Column(name = "LAST_NAME")
 	private String lastName;
 	
 	@Transient
 	private MultipartFile photoPart;
 	
-	@Column(name = "PHOTO")
 	private Blob photo;
 
 	@Transient
@@ -89,11 +85,7 @@ public class Person implements CdseEntity{
 	@Transient
 	private String personIdString;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "PERSON_ROLE", joinColumns = { 
-			@JoinColumn(name = "PERSON_ID", nullable = false, updatable = false) }, 
-			inverseJoinColumns = { @JoinColumn(name = "ROLE_ID", 
-					nullable = false, updatable = false) })
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<Role>();
     
 	@Override
@@ -150,7 +142,11 @@ public class Person implements CdseEntity{
 		this.setFirstName(inPerson.getFirstName());
 		this.setLastName(inPerson.getLastName());
 		this.setPhotoPart(inPerson.getPhotoPart());
-		this.setRoles(inPerson.getRoles());
+		for (Role role : inPerson.getRoles()) {
+			Role tmpRole = new Role();
+			tmpRole.setRoleName(role.getRoleName());
+			this.getRoles().add(tmpRole);
+		}
 	}
 	@Override
 	public int getId() {

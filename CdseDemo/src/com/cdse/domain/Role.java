@@ -27,19 +27,17 @@ public class Role implements CdseEntity{
 		this.roleId = roleId;
 	}
 	public String getRoleName() {
-		return firstName;
+		return roleName;
 	}
 	public void setRoleName(String firstName) {
-		this.firstName = firstName;
+		this.roleName = firstName;
 	}
 
 	@Id
-	@Column(name = "ROLE_ID")
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue()
 	private Integer roleId;
 	
-	@Column(name = "ROLE_NAME")
-	private String firstName;
+	private String roleName;
 	
 	@Transient
 	private EntityState state;
