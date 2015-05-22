@@ -21,10 +21,13 @@
 	                    <td>Last Name: </td>
 	                    <td><input type="text" name="lastName" size="50"/></td>
 	                </tr>
-	                <tr>
-	                    <td>Role: </td>
-	                    <td><input type="text" name="roleName" size="50"/></td>
-	                </tr>
+					<tr>
+						<td>Roles :</td><td>    <select name="roles" multiple>
+																<option value="Developer">Developer</option>
+																<option value="Musician">Musician</option>
+																<option value="Father">Father</option>
+																</select><td>
+					</tr>
 	                <tr>
 	                    <td>Portrait Photo: </td>
 	                    <td><input type="file" name="photoPart" size="50"/></td>

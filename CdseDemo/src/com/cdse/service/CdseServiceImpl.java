@@ -9,74 +9,86 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cdse.dao.CdseDao;
 import com.cdse.domain.CdseEntity;
 import com.cdse.domain.EntityState;
+import com.cdse.dto.CdseDto;
 
-public class CdseServiceImpl<T extends CdseEntity> implements CdseService<T> {
+public class CdseServiceImpl<TDto extends CdseDto, TDom extends CdseEntity> implements CdseService<TDto> {
 
 	@Autowired
-	private CdseDao<T> entityDao;
+	private CdseDao<TDto, TDom> entityDao;
 
 	@Override
 	@Transactional
-	public void insert(T inEntity) throws IOException {
+	public void insert(TDto inDto) throws IOException {
+		
+		// copy attributes from DTO to Domain object
+		TDom domainObject = inDto.copyTo();
 		
 		// set the state
-		inEntity.setState(EntityState.NEW);
+		domainObject.setState(EntityState.NEW);
 		
 		// let the domain object(s) do the business logic without persistence
-    	inEntity.populate();
+		domainObject.populate();
     	
     	// now that the domain object(s) have populated all attributes, persist the domain object(s) to the database
-		getEntityDao().insert(inEntity);
+		getEntityDao().insert(domainObject);
 	}
 
 	@Override
 	@Transactional
-	public void insertOrUpdate(T inEntity) throws IOException {
-    	inEntity.populate();
-		getEntityDao().insertOrUpdate(inEntity);
-	}
-
-	@Override
-	@Transactional
-	public T update(String inQueryKey, T inEntity) throws IOException {
+	public void insertOrUpdate(TDto inDto) throws IOException {
 		
-		T oldEntity = getEntityDao().get(inQueryKey, inEntity);
-		oldEntity.copy(inEntity);
+		// copy attributes from DTO to Domain object
+		@SuppressWarnings("unchecked")
+		TDom domainObject = (TDom) inDto.copyTo();
+		
+		domainObject.populate();
+		
+		getEntityDao().insertOrUpdate(domainObject);
+	}
+
+	@Override
+	@Transactional
+	public void update(String inQueryKey, TDto inDto) throws IOException {
+		
+		TDom oldEntity = getEntityDao().get(inQueryKey, inDto);
+		
+		// copy attributes from DTO to Domain object
+		inDto.copyTo(oldEntity);
 		
 		// set the state
 		oldEntity.setState(EntityState.DIRTY);
 		
 		oldEntity.populate();
 		getEntityDao().insertOrUpdate(oldEntity);
-		return oldEntity;
 	}
 
 	@Override
 	@Transactional
-	public void delete(T inEntity) throws IOException {
+	public void delete(TDto inDto) throws IOException {
 		// set the state
-		inEntity.setState(EntityState.OLD);
-		
-		getEntityDao().delete(inEntity);
+		TDom domainObject = inDto.copyTo();
+		getEntityDao().delete(domainObject);
 	}
 
 	@Override
 	@Transactional
-	public T get(String inQueryKey, T inSpec) {
-		return getEntityDao().get(inQueryKey, inSpec);
+	public void get(String inQueryKey, TDto inDto) {
+		TDom domainObject = getEntityDao().get(inQueryKey, inDto);
+		inDto.copyFrom(domainObject);
 	}
 
 	@Override
 	@Transactional
-	public List<T> getList(String inQueryKey, T inSpec) {
-		return getEntityDao().getList(inQueryKey, inSpec);
+	public List<TDto> getList(String inQueryKey, TDto inDto) {
+		List<TDom> domainList = getEntityDao().getList(inQueryKey, inDto);
+		return null;
 	}
 
-	public CdseDao<T> getEntityDao() {
+	public CdseDao<TDto, TDom> getEntityDao() {
 		return entityDao;
 	}
 
-	public void setEntityDao(CdseDao<T> entityDao) {
+	public void setEntityDao(CdseDao<TDto,TDom> entityDao) {
 		this.entityDao = entityDao;
 	}
 }

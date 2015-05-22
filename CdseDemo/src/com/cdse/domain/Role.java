@@ -64,15 +64,4 @@ public class Role implements CdseEntity{
 	public void setState(EntityState state) {
 		this.state = state;
 	}
-	@Override
-	public <T> void copy(T inEntity) {
-		Role inRole = (Role)inEntity;
-		this.setRoleName(inRole.getRoleName());
-	}
-
-	@Override
-	public int getId() {
-		return getRoleId();
-	}
-
 }

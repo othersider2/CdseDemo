@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -28,6 +30,11 @@ import org.springframework.web.multipart.MultipartFile;
 @Entity
 @Table(name="PERSON")
 public class Person implements CdseEntity{
+	
+	public Person() {
+		
+	}
+	
 	public Integer getPersonId() {
 		return personId;
 	}
@@ -82,9 +89,6 @@ public class Person implements CdseEntity{
 	@Transient
 	private EntityState state;
 	
-	@Transient
-	private String personIdString;
-	
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<Role>();
     
@@ -136,28 +140,4 @@ public class Person implements CdseEntity{
 	public void setState(EntityState state) {
 		this.state = state;
 	}
-	@Override
-	public <T> void copy(T inEntity) {
-		Person inPerson = (Person)inEntity;
-		this.setFirstName(inPerson.getFirstName());
-		this.setLastName(inPerson.getLastName());
-		this.setPhotoPart(inPerson.getPhotoPart());
-		for (Role role : inPerson.getRoles()) {
-			Role tmpRole = new Role();
-			tmpRole.setRoleName(role.getRoleName());
-			this.getRoles().add(tmpRole);
-		}
-	}
-	@Override
-	public int getId() {
-		return getPersonId();
-	}
-	public String getPersonIdString() {
-		return personIdString;
-	}
-	public void setPersonIdString(String personIdString) {
-		this.personIdString = personIdString;
-        this.setPersonId(Integer.parseInt(personIdString));
-	}
-
 }

@@ -9,56 +9,57 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.cdse.domain.CdseEntity;
+import com.cdse.dto.CdseDto;
 import com.cdse.query.CdseQuery;
 
 @Repository
-public class CdseDaoImpl<T  extends CdseEntity> implements CdseDao<T> {
+public class CdseDaoImpl<TDto extends CdseDto, TDom  extends CdseEntity> implements CdseDao<TDto, TDom> {
 
 	@Autowired
     private SessionFactory sessionFactory;
 
-	private Map<String, CdseQuery<T>> queryMap;
+	private Map<String, CdseQuery<TDto, TDom>> queryMap;
 
 	/* (non-Javadoc)
 	 * @see com.cdse.demo.dao.EntityDao#insert(com.cdse.demo.domain.Persons)
 	 */
     @Override
-	public void insert(T inEntity) throws IOException {
+	public void insert(TDom inEntity) throws IOException {
 
 		sessionFactory.getCurrentSession().save(inEntity);
     }
 
 	@Override
-	public void insertOrUpdate(T inEntity) throws IOException {
+	public void insertOrUpdate(TDom inEntity) throws IOException {
 		sessionFactory.getCurrentSession().save(inEntity);
 	}
 
 	@Override
-	public void update(T inEntity) throws IOException {
+	public void update(TDom inEntity) throws IOException {
 		sessionFactory.getCurrentSession().update(inEntity);
 	}
 
 	@Override
-	public void delete(T inEntity) throws IOException {
+	public void delete(TDom inEntity) throws IOException {
 		sessionFactory.getCurrentSession().delete(inEntity);
 	}
 
 	@Override
-	public T get(String inQueryKey, T inSpec) {
-		return getList(inQueryKey, inSpec).get(0);
+	public TDom get(String inQueryKey, TDto inDto) {
+		return getList(inQueryKey, inDto).get(0);
 	}
 
 	@Override
-	public List<T> getList(String inQueryKey, T inSpec) {
-		CdseQuery<T> cdseQuery = getQueryMap().get(inQueryKey);
-		return cdseQuery.execute(sessionFactory, inSpec);
+	public List<TDom> getList(String inQueryKey, TDto inDto) {
+		CdseQuery<TDto, TDom> cdseQuery = getQueryMap().get(inQueryKey);
+		return cdseQuery.execute(sessionFactory, inDto);
 	}
 
-	public Map<String, CdseQuery<T>> getQueryMap() {
+	public Map<String, CdseQuery<TDto, TDom>> getQueryMap() {
 		return queryMap;
 	}
 
-	public void setQueryMap(Map<String, CdseQuery<T>> queryMap) {
+	public void setQueryMap(Map<String, CdseQuery<TDto, TDom>> queryMap) {
 		this.queryMap = queryMap;
 	}
 

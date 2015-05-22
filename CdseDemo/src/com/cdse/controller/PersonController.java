@@ -19,13 +19,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cdse.domain.Person;
 import com.cdse.domain.Role;
+import com.cdse.dto.PersonDto;
 import com.cdse.service.CdseService;
 
 @Controller
 public class PersonController {
 	
 	@Autowired
-	CdseService<Person> cdseService;
+	CdseService<PersonDto> cdseService;
 
 	@ModelAttribute
     public void addingCommonObjects(Model model1) {
@@ -41,15 +42,11 @@ public class PersonController {
 	}
 	
 	@RequestMapping(value="/createPerson.html", method = RequestMethod.POST)
-	public ModelAndView submitPersonForm(@ModelAttribute("person") Person person, @RequestParam("roleName") String roleName) {
+	public ModelAndView submitPersonForm(@ModelAttribute("person") PersonDto personDto) {
 	
 		ModelAndView model1 = null;
 		try {
-			Role role = new Role();
-			role.setRoleName(roleName);
-			person.getRoles().add(role);
-			
-			cdseService.insert(person);
+			cdseService.insert(personDto);
 			model1 = new ModelAndView("UploadSuccess");
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -59,16 +56,11 @@ public class PersonController {
 	}
 	
 	@RequestMapping(value="/updatePerson.html", method = RequestMethod.POST)
-	public ModelAndView updatePersonForm(@ModelAttribute("person") Person person, @RequestParam("roleName") String roleName) {
+	public ModelAndView updatePersonForm(@ModelAttribute("person") PersonDto personDto) {
 	
 		ModelAndView model1 = null;
 		try {
-			Role role = new Role();
-			role.setRoleName(roleName);
-			person.getRoles().add(role);
-
-			Person updatedPerson = cdseService.update("matchId", person);
-			person.copy(updatedPerson);
+			cdseService.update("matchId", personDto);
 			model1 = new ModelAndView("UploadSuccess");
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -78,11 +70,10 @@ public class PersonController {
 	}
 	
 	@RequestMapping(value="/getPerson.html", method = RequestMethod.POST)
-	public ModelAndView getPersonForm(@ModelAttribute("person") Person person) {
+	public ModelAndView getPersonForm(@ModelAttribute("person") PersonDto personDto) {
 	
 		ModelAndView model1 = null;
-		Person retrievedPerson = cdseService.get("matchId", person);
-		person.copy(retrievedPerson);
+		cdseService.get("matchId", personDto);
 		model1 = new ModelAndView("DownloadSuccess");
 		
 		return model1;

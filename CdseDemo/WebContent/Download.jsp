@@ -15,7 +15,7 @@
 	            <table border="0">
 	                <tr>
 	                    <td>Person ID: </td>
-	                    <td><input type="text" name="personIdString" size="5"/></td>
+	                    <td><input type="text" name="personId" size="5"/></td>
 	                </tr>
 	                <tr>
 	                    <td>First Name: </td>

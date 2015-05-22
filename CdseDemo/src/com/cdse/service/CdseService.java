@@ -5,12 +5,11 @@ import java.util.List;
 
 import com.cdse.domain.CdseEntity;
 
-public interface CdseService<T extends CdseEntity> {
-	void insert(T inEntity) throws IOException;
-	void insertOrUpdate(T inEntity) throws IOException;
-	T update(String inQueryKey, T inEntity) throws IOException;
-	void delete(T inEntity) throws IOException;
-	T get(String inQueryKey, T inSpec);
-	List<T> getList(String inQueryKey, T inSpec);
-
+public interface CdseService<TDto> {
+	void insert(TDto inDto) throws IOException;
+	void insertOrUpdate(TDto inDto) throws IOException;
+	void update(String inQueryKey, TDto inDto) throws IOException;
+	void delete(TDto inDto) throws IOException;
+	void get(String inQueryKey, TDto inDto);
+	List<TDto> getList(String inQueryKey, TDto inDto);
 }

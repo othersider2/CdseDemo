@@ -18,7 +18,7 @@
 		</tr>
 		<tr>
 			<td>Roles :</td>
-			<td>${person.roles}</td>
+			<td>${person.roleNames}</td>
 		</tr>
 
 	</table>
