@@ -52,25 +52,11 @@ public class PersonDto implements CdseDto{
 		this.roleNames = roleNames;
 	}
 	@Override
-	public <TDom> TDom copyTo() {
-		Person outPerson = new Person();
-		if (this.getPersonId() != null) {
-			outPerson.setPersonId(this.getId());
-		}
-		outPerson.setFirstName(this.getFirstName());
-		outPerson.setLastName(this.getLastName());
-		outPerson.setPhotoPart(this.getPhotoPart());
-		for (String roleName : this.getRoleNames()) {
-			Role role = new Role();
-			role.setRoleName(roleName);
-			outPerson.getRoles().add(role);
-		}
-		
-		return (TDom) outPerson;
-	}
-	@Override
 	public <TDom> void copyTo(TDom inDom) {
 		Person person = (Person)inDom;
+		if (this.getPersonId() != null) {
+			person.setPersonId(this.getId());
+		}
 		person.setFirstName(this.getFirstName());
 		person.setLastName(this.getLastName());
 		person.setPhotoPart(this.getPhotoPart());
@@ -96,11 +82,4 @@ public class PersonDto implements CdseDto{
 	public int getId() {
 		return Integer.parseInt(this.getPersonId());
 	}
-	
-	 @SuppressWarnings("unchecked")
-	public <TDom> Class<TDom> getClassType() {
-		Person person = new Person();
-		return (Class<TDom>) person.getClass();
-	}
-	   
 }

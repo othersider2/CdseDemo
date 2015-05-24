@@ -21,7 +21,7 @@ import com.cdse.dao.CdseDao;
 import com.cdse.domain.CdseEntity;
 import com.cdse.domain.Person;
 import com.cdse.domain.EntityState;
-import com.cdse.service.CdseServiceImpl;
+import com.cdse.service.CdseServiceAbstract;
 
 //@RunWith(MockitoJUnitRunner.class)
 public class CdseServiceImplTest {

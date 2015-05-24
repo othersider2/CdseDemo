@@ -9,10 +9,10 @@ import com.cdse.domain.Person;
 import com.cdse.dto.PersonDto;
 
 @Repository
-public class GetPersonUsingNameQueryImpl implements CdseQuery<PersonDto, Person> {
+public class GetPersonUsingNameQueryImpl implements CdseQuery<Person, PersonDto> {
 
 	@Override
-	public List<Person> execute(SessionFactory inSessionFactory, PersonDto inPersonDto) {
+	public List<Person> execute(SessionFactory inSessionFactory, Class inClass, PersonDto inPersonDto) {
 		@SuppressWarnings("unchecked")
 		List<Person> persons = inSessionFactory.getCurrentSession().createQuery(
 			    "from Persons as person where person.lastName = ?")

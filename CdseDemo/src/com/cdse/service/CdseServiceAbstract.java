@@ -11,17 +11,23 @@ import com.cdse.domain.CdseEntity;
 import com.cdse.domain.EntityState;
 import com.cdse.dto.CdseDto;
 
-public class CdseServiceImpl<TDto extends CdseDto, TDom extends CdseEntity> implements CdseService<TDto> {
+public abstract class CdseServiceAbstract<TDto extends CdseDto, TDom extends CdseEntity> implements CdseService<TDto> {
 
 	@Autowired
-	private CdseDao<TDto, TDom> entityDao;
+	private CdseDao<TDom, TDto> entityDao;
+	
+	protected abstract TDom getDomObject();
+	protected abstract Class<TDom> getDomClass();
 
 	@Override
 	@Transactional
 	public void insert(TDto inDto) throws IOException {
 		
+		// create domain object
+		TDom domainObject = getDomObject();
+		
 		// copy attributes from DTO to Domain object
-		TDom domainObject = inDto.copyTo();
+		inDto.copyTo(domainObject);
 		
 		// set the state
 		domainObject.setState(EntityState.NEW);
@@ -37,9 +43,11 @@ public class CdseServiceImpl<TDto extends CdseDto, TDom extends CdseEntity> impl
 	@Transactional
 	public void insertOrUpdate(TDto inDto) throws IOException {
 		
+		// create domain object
+		TDom domainObject = getDomObject();
+
 		// copy attributes from DTO to Domain object
-		@SuppressWarnings("unchecked")
-		TDom domainObject = (TDom) inDto.copyTo();
+		inDto.copyTo(domainObject);
 		
 		domainObject.populate();
 		
@@ -50,7 +58,7 @@ public class CdseServiceImpl<TDto extends CdseDto, TDom extends CdseEntity> impl
 	@Transactional
 	public void update(String inQueryKey, TDto inDto) throws IOException {
 		
-		TDom oldEntity = getEntityDao().get(inQueryKey, inDto);
+		TDom oldEntity = getEntityDao().get(inQueryKey, getDomClass(), inDto);
 		
 		// copy attributes from DTO to Domain object
 		inDto.copyTo(oldEntity);
@@ -65,30 +73,34 @@ public class CdseServiceImpl<TDto extends CdseDto, TDom extends CdseEntity> impl
 	@Override
 	@Transactional
 	public void delete(TDto inDto) throws IOException {
-		// set the state
-		TDom domainObject = inDto.copyTo();
+		// create domain object
+		TDom domainObject = getDomObject();
+
+		inDto.copyTo(domainObject);
 		getEntityDao().delete(domainObject);
 	}
 
 	@Override
 	@Transactional
 	public void get(String inQueryKey, TDto inDto) {
-		TDom domainObject = getEntityDao().get(inQueryKey, inDto);
-		inDto.copyFrom(domainObject);
+
+		TDom oldEntity = getEntityDao().get(inQueryKey, getDomClass(), inDto);
+		inDto.copyFrom(oldEntity);
 	}
 
 	@Override
 	@Transactional
 	public List<TDto> getList(String inQueryKey, TDto inDto) {
-		List<TDom> domainList = getEntityDao().getList(inQueryKey, inDto);
+		
+		List<TDom> domainList = getEntityDao().getList(inQueryKey, getDomClass(), inDto);
 		return null;
 	}
 
-	public CdseDao<TDto, TDom> getEntityDao() {
+	public CdseDao<TDom, TDto> getEntityDao() {
 		return entityDao;
 	}
 
-	public void setEntityDao(CdseDao<TDto,TDom> entityDao) {
+	public void setEntityDao(CdseDao<TDom, TDto> entityDao) {
 		this.entityDao = entityDao;
 	}
 }

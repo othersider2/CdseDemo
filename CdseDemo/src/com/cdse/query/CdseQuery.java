@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 import com.cdse.domain.CdseEntity;
 import com.cdse.dto.CdseDto;
 
-public interface CdseQuery<T extends CdseDto, TDom extends CdseEntity> {
-	List<TDom> execute(SessionFactory inSessionFactory, T inSpec);
+public interface CdseQuery<TDom extends CdseEntity, TDto extends CdseDto> {
+	List<TDom> execute(SessionFactory inSessionFactory, Class inClass, TDto inSpec);
 	
 }

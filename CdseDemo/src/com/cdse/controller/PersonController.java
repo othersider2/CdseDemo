@@ -21,12 +21,13 @@ import com.cdse.domain.Person;
 import com.cdse.domain.Role;
 import com.cdse.dto.PersonDto;
 import com.cdse.service.CdseService;
+import com.cdse.service.PersonService;
 
 @Controller
 public class PersonController {
 	
 	@Autowired
-	CdseService<PersonDto> cdseService;
+	CdseService<PersonDto> personService;
 
 	@ModelAttribute
     public void addingCommonObjects(Model model1) {
@@ -46,7 +47,7 @@ public class PersonController {
 	
 		ModelAndView model1 = null;
 		try {
-			cdseService.insert(personDto);
+			personService.insert(personDto);
 			model1 = new ModelAndView("UploadSuccess");
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -60,7 +61,7 @@ public class PersonController {
 	
 		ModelAndView model1 = null;
 		try {
-			cdseService.update("matchId", personDto);
+			personService.update("matchId", personDto);
 			model1 = new ModelAndView("UploadSuccess");
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -73,7 +74,7 @@ public class PersonController {
 	public ModelAndView getPersonForm(@ModelAttribute("person") PersonDto personDto) {
 	
 		ModelAndView model1 = null;
-		cdseService.get("matchId", personDto);
+		personService.get("matchId", personDto);
 		model1 = new ModelAndView("DownloadSuccess");
 		
 		return model1;

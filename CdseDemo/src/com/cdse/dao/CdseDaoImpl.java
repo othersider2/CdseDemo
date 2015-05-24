@@ -13,53 +13,53 @@ import com.cdse.dto.CdseDto;
 import com.cdse.query.CdseQuery;
 
 @Repository
-public class CdseDaoImpl<TDto extends CdseDto, TDom  extends CdseEntity> implements CdseDao<TDto, TDom> {
+public class CdseDaoImpl<TDom  extends CdseEntity, TDto extends CdseDto> implements CdseDao<TDom, TDto> {
 
 	@Autowired
     private SessionFactory sessionFactory;
 
-	private Map<String, CdseQuery<TDto, TDom>> queryMap;
+	private Map<String, CdseQuery<TDom, TDto>> queryMap;
 
 	/* (non-Javadoc)
 	 * @see com.cdse.demo.dao.EntityDao#insert(com.cdse.demo.domain.Persons)
 	 */
     @Override
-	public void insert(TDom inEntity) throws IOException {
+	public void insert(TDom inDom) throws IOException {
 
-		sessionFactory.getCurrentSession().save(inEntity);
+		sessionFactory.getCurrentSession().save(inDom);
     }
 
 	@Override
-	public void insertOrUpdate(TDom inEntity) throws IOException {
-		sessionFactory.getCurrentSession().save(inEntity);
+	public void insertOrUpdate(TDom inDom) throws IOException {
+		sessionFactory.getCurrentSession().save(inDom);
 	}
 
 	@Override
-	public void update(TDom inEntity) throws IOException {
-		sessionFactory.getCurrentSession().update(inEntity);
+	public void update(TDom inDom) throws IOException {
+		sessionFactory.getCurrentSession().update(inDom);
 	}
 
 	@Override
-	public void delete(TDom inEntity) throws IOException {
-		sessionFactory.getCurrentSession().delete(inEntity);
+	public void delete(TDom inDom) throws IOException {
+		sessionFactory.getCurrentSession().delete(inDom);
 	}
 
 	@Override
-	public TDom get(String inQueryKey, TDto inDto) {
-		return getList(inQueryKey, inDto).get(0);
+	public TDom get(String inQueryKey, Class<TDom> inClass, TDto inDto) {
+		return getList(inQueryKey, inClass, inDto).get(0);
 	}
 
 	@Override
-	public List<TDom> getList(String inQueryKey, TDto inDto) {
-		CdseQuery<TDto, TDom> cdseQuery = getQueryMap().get(inQueryKey);
-		return cdseQuery.execute(sessionFactory, inDto);
+	public List<TDom> getList(String inQueryKey, Class<TDom> inClass, TDto inDto) {
+		CdseQuery<TDom, TDto> cdseQuery = getQueryMap().get(inQueryKey);
+		return cdseQuery.execute(sessionFactory, inClass, inDto);
 	}
 
-	public Map<String, CdseQuery<TDto, TDom>> getQueryMap() {
+	public Map<String, CdseQuery<TDom, TDto>> getQueryMap() {
 		return queryMap;
 	}
 
-	public void setQueryMap(Map<String, CdseQuery<TDto, TDom>> queryMap) {
+	public void setQueryMap(Map<String, CdseQuery<TDom, TDto>> queryMap) {
 		this.queryMap = queryMap;
 	}
 

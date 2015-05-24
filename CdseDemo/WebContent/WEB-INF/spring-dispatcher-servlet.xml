@@ -56,7 +56,7 @@
 	        </property>
 	 </bean>
  
-	<bean id="cdseService" class="com.cdse.service.CdseServiceImpl"/>
+	<bean id="personService" class="com.cdse.service.PersonService"/>
 
 	<bean id="entityDao" class="com.cdse.dao.CdseDaoImpl">
 		<property name="queryMap">
