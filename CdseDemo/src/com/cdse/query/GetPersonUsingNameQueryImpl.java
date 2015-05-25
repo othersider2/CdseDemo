@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
+import com.cdse.domain.CdseEntity;
 import com.cdse.domain.Person;
 import com.cdse.dto.PersonDto;
 
@@ -12,7 +13,8 @@ import com.cdse.dto.PersonDto;
 public class GetPersonUsingNameQueryImpl implements CdseQuery<Person, PersonDto> {
 
 	@Override
-	public List<Person> execute(SessionFactory inSessionFactory, Class<Person> inClass, PersonDto inPersonDto) {
+	public List<Person> execute(SessionFactory inSessionFactory,
+			Class<? extends CdseEntity> inClass, PersonDto inPersonDto) {
 		@SuppressWarnings("unchecked")
 		List<Person> persons = inSessionFactory.getCurrentSession().createQuery(
 			    "from Persons as person where person.lastName = ?")
