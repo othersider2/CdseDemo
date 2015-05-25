@@ -16,7 +16,7 @@ public class LoadEntity< TDom extends CdseEntity, TDto extends CdseDto> implemen
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<TDom> execute(SessionFactory inSessionFactory, Class inClass, TDto inDto) {
+	public List<TDom> execute(SessionFactory inSessionFactory, Class<TDom> inClass, TDto inDto) {
 		List<TDom> outList = new ArrayList<TDom>();
 		outList.add((TDom) inSessionFactory.getCurrentSession().get(inClass, inDto.getId()));
 		

@@ -12,7 +12,7 @@ import com.cdse.dto.PersonDto;
 public class GetPersonUsingNameQueryImpl implements CdseQuery<Person, PersonDto> {
 
 	@Override
-	public List<Person> execute(SessionFactory inSessionFactory, Class inClass, PersonDto inPersonDto) {
+	public List<Person> execute(SessionFactory inSessionFactory, Class<Person> inClass, PersonDto inPersonDto) {
 		@SuppressWarnings("unchecked")
 		List<Person> persons = inSessionFactory.getCurrentSession().createQuery(
 			    "from Persons as person where person.lastName = ?")
