@@ -13,7 +13,6 @@ import com.cdse.dto.CdseDto;
 @Repository
 public class LoadEntity<TDom extends CdseEntity, TDto extends CdseDto> implements CdseQuery<TDom, TDto> {
 
-
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<TDom> execute(SessionFactory inSessionFactory, TDom inPrototype, TDto inDto) {

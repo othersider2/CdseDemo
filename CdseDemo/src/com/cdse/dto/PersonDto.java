@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.cdse.domain.Person;
 import com.cdse.domain.Role;
 
-public class PersonDto implements CdseDto{
+public class PersonDto implements CdseDto<Person>{
 
 	private String personId;
 	
@@ -52,28 +52,27 @@ public class PersonDto implements CdseDto{
 		this.roleNames = roleNames;
 	}
 	@Override
-	public <TDom> void copyTo(TDom inDom) {
-		Person person = (Person)inDom;
+	public void copyTo(Person inPerson) {
 		if (this.getPersonId() != null) {
-			person.setPersonId(this.getId());
+			inPerson.setPersonId(this.getId());
 		}
-		person.setFirstName(this.getFirstName());
-		person.setLastName(this.getLastName());
-		person.setPhotoPart(this.getPhotoPart());
-		for (String roleName : this.getRoleNames()) {
+		inPerson.setFirstName(this.getFirstName());
+		inPerson.setLastName(this.getLastName());
+		inPerson.setPhotoPart(this.getPhotoPart());
+		for (String roleName : this.getRoleNames()) {       
+			
 			Role role = new Role();
 			role.setRoleName(roleName);
-			person.getRoles().add(role);
+			inPerson.getRoles().add(role);
 		}
 	}
 	
 	@Override
-	public <TDom> void copyFrom(TDom inDom) {
-		Person person = (Person)inDom;
-		this.setFirstName(person.getFirstName());
-		this.setLastName(person.getLastName());
-		this.setPhotoPart(person.getPhotoPart());
-		for (Role role : person.getRoles()) {
+	public void copyFrom(Person inPerson) {
+		this.setFirstName(inPerson.getFirstName());
+		this.setLastName(inPerson.getLastName());
+		this.setPhotoPart(inPerson.getPhotoPart());
+		for (Role role : inPerson.getRoles()) {
 			this.getRoleNames().add(role.getRoleName());
 		}
 
