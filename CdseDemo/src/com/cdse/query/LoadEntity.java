@@ -11,15 +11,14 @@ import com.cdse.domain.Person;
 import com.cdse.dto.CdseDto;
 
 @Repository
-public class LoadEntity< TDom extends CdseEntity, TDto extends CdseDto> implements CdseQuery<TDom, TDto> {
+public class LoadEntity<TDom extends CdseEntity, TDto extends CdseDto> implements CdseQuery<TDom, TDto> {
 
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<TDom> execute(SessionFactory inSessionFactory,
-			Class<? extends CdseEntity> inClass, TDto inDto) {
+	public List<TDom> execute(SessionFactory inSessionFactory, TDom inPrototype, TDto inDto) {
 		List<TDom> outList = new ArrayList<TDom>();
-		outList.add((TDom) inSessionFactory.getCurrentSession().get(inClass, inDto.getId()));
+		outList.add((TDom) inSessionFactory.getCurrentSession().get(inPrototype.getClass(), inDto.getId()));
 			
 		return outList;
 	}

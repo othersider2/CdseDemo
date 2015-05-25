@@ -13,7 +13,7 @@ import com.cdse.dto.CdseDto;
 import com.cdse.query.CdseQuery;
 
 @Repository
-public class CdseDaoImpl<TDom  extends CdseEntity, TDto extends CdseDto> implements CdseDao<TDom, TDto> {
+public class CdseDaoImpl<TDom extends CdseEntity, TDto extends CdseDto> implements CdseDao<TDom, TDto> {
 
 	@Autowired
     private SessionFactory sessionFactory;
@@ -45,14 +45,14 @@ public class CdseDaoImpl<TDom  extends CdseEntity, TDto extends CdseDto> impleme
 	}
 
 	@Override
-	public TDom get(String inQueryKey, Class<? extends CdseEntity> inClass, TDto inDto) {
-		return getList(inQueryKey, inClass, inDto).get(0);
+	public TDom get(String inQueryKey, TDom inPrototype, TDto inDto) {
+		return getList(inQueryKey, inPrototype, inDto).get(0);
 	}
 
 	@Override
-	public List<TDom> getList(String inQueryKey, Class<? extends CdseEntity> inClass, TDto inDto) {
+	public List<TDom> getList(String inQueryKey, TDom inPrototype, TDto inDto) {
 		CdseQuery<TDom, TDto> cdseQuery = getQueryMap().get(inQueryKey);
-		return cdseQuery.execute(sessionFactory, inClass, inDto);
+		return cdseQuery.execute(sessionFactory, inPrototype, inDto);
 	}
 
 	public Map<String, CdseQuery<TDom, TDto>> getQueryMap() {

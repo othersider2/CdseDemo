@@ -11,7 +11,7 @@ import com.cdse.domain.CdseEntity;
 import com.cdse.domain.EntityState;
 import com.cdse.dto.CdseDto;
 
-public abstract class CdseServiceAbstract<TDto extends CdseDto, TDom extends CdseEntity> implements CdseService<TDto> {
+public abstract class CdseServiceAbstract<TDom extends CdseEntity, TDto extends CdseDto> implements CdseService<TDto> {
 
 	@Autowired
 	private CdseDao<TDom, TDto> entityDao;
@@ -57,7 +57,7 @@ public abstract class CdseServiceAbstract<TDto extends CdseDto, TDom extends Cds
 	@Transactional
 	public void update(String inQueryKey, TDto inDto) throws IOException {
 		
-		TDom oldEntity = getEntityDao().get(inQueryKey, getDomObject().getClass(), inDto);
+		TDom oldEntity = getEntityDao().get(inQueryKey, getDomObject(), inDto);
 		
 		// copy attributes from DTO to Domain object
 		inDto.copyTo(oldEntity);
@@ -83,7 +83,7 @@ public abstract class CdseServiceAbstract<TDto extends CdseDto, TDom extends Cds
 	@Transactional
 	public void get(String inQueryKey, TDto inDto) {
 
-		TDom oldEntity = getEntityDao().get(inQueryKey, getDomObject().getClass(), inDto);
+		TDom oldEntity = getEntityDao().get(inQueryKey, getDomObject(), inDto);
 		inDto.copyFrom(oldEntity);
 	}
 
@@ -91,7 +91,7 @@ public abstract class CdseServiceAbstract<TDto extends CdseDto, TDom extends Cds
 	@Transactional
 	public List<TDto> getList(String inQueryKey, TDto inDto) {
 		
-		List<TDom> domainList = getEntityDao().getList(inQueryKey, getDomObject().getClass(), inDto);
+		List<TDom> domainList = getEntityDao().getList(inQueryKey, getDomObject(), inDto);
 		return null;
 	}
 
