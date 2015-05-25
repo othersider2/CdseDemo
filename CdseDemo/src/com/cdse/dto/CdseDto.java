@@ -2,8 +2,8 @@ package com.cdse.dto;
 
 import com.cdse.domain.CdseEntity;
 
-public interface CdseDto<TDom extends CdseEntity> {
+public interface CdseDto {
 	int getId();
-	void copyTo(TDom inDom);
-	void copyFrom(TDom inDom);
+	<TDom extends CdseEntity> void copyTo(TDom inDom);
+	<TDom extends CdseEntity> void copyFrom(TDom inDom);
 }

@@ -5,10 +5,11 @@ import java.util.Set;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.cdse.domain.CdseEntity;
 import com.cdse.domain.Person;
 import com.cdse.domain.Role;
 
-public class PersonDto implements CdseDto<Person>{
+public class PersonDto implements CdseDto{
 
 	private String personId;
 	
@@ -52,27 +53,29 @@ public class PersonDto implements CdseDto<Person>{
 		this.roleNames = roleNames;
 	}
 	@Override
-	public void copyTo(Person inPerson) {
+	public <TDom extends CdseEntity> void copyTo(TDom inPerson) {
+		Person person = (Person)inPerson;
 		if (this.getPersonId() != null) {
-			inPerson.setPersonId(this.getId());
+			person.setPersonId(this.getId());
 		}
-		inPerson.setFirstName(this.getFirstName());
-		inPerson.setLastName(this.getLastName());
-		inPerson.setPhotoPart(this.getPhotoPart());
+		person.setFirstName(this.getFirstName());
+		person.setLastName(this.getLastName());
+		person.setPhotoPart(this.getPhotoPart());
 		for (String roleName : this.getRoleNames()) {       
 			
 			Role role = new Role();
 			role.setRoleName(roleName);
-			inPerson.getRoles().add(role);
+			person.getRoles().add(role);
 		}
 	}
 	
 	@Override
-	public void copyFrom(Person inPerson) {
-		this.setFirstName(inPerson.getFirstName());
-		this.setLastName(inPerson.getLastName());
-		this.setPhotoPart(inPerson.getPhotoPart());
-		for (Role role : inPerson.getRoles()) {
+	public <TDom extends CdseEntity> void copyFrom(TDom inPerson) {
+		Person person = (Person)inPerson;
+		this.setFirstName(person.getFirstName());
+		this.setLastName(person.getLastName());
+		this.setPhotoPart(person.getPhotoPart());
+		for (Role role : person.getRoles()) {
 			this.getRoleNames().add(role.getRoleName());
 		}
 
