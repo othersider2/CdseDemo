@@ -13,15 +13,11 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.cdse.domain.Person;
-import com.cdse.domain.Role;
 import com.cdse.dto.PersonDto;
 import com.cdse.service.CdseService;
-import com.cdse.service.PersonService;
 
 @Controller
 public class PersonController {

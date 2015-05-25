@@ -45,12 +45,12 @@ public class CdseDaoImpl<TDom  extends CdseEntity, TDto extends CdseDto> impleme
 	}
 
 	@Override
-	public TDom get(String inQueryKey, Class<TDom> inClass, TDto inDto) {
+	public TDom get(String inQueryKey, Class<? extends CdseEntity> inClass, TDto inDto) {
 		return getList(inQueryKey, inClass, inDto).get(0);
 	}
 
 	@Override
-	public List<TDom> getList(String inQueryKey, Class<TDom> inClass, TDto inDto) {
+	public List<TDom> getList(String inQueryKey, Class<? extends CdseEntity> inClass, TDto inDto) {
 		CdseQuery<TDom, TDto> cdseQuery = getQueryMap().get(inQueryKey);
 		return cdseQuery.execute(sessionFactory, inClass, inDto);
 	}

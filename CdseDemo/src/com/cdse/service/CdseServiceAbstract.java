@@ -17,7 +17,6 @@ public abstract class CdseServiceAbstract<TDto extends CdseDto, TDom extends Cds
 	private CdseDao<TDom, TDto> entityDao;
 	
 	protected abstract TDom getDomObject();
-	protected abstract Class<TDom> getDomClass();
 
 	@Override
 	@Transactional
@@ -58,7 +57,7 @@ public abstract class CdseServiceAbstract<TDto extends CdseDto, TDom extends Cds
 	@Transactional
 	public void update(String inQueryKey, TDto inDto) throws IOException {
 		
-		TDom oldEntity = getEntityDao().get(inQueryKey, getDomClass(), inDto);
+		TDom oldEntity = getEntityDao().get(inQueryKey, getDomObject().getClass(), inDto);
 		
 		// copy attributes from DTO to Domain object
 		inDto.copyTo(oldEntity);
@@ -84,7 +83,7 @@ public abstract class CdseServiceAbstract<TDto extends CdseDto, TDom extends Cds
 	@Transactional
 	public void get(String inQueryKey, TDto inDto) {
 
-		TDom oldEntity = getEntityDao().get(inQueryKey, getDomClass(), inDto);
+		TDom oldEntity = getEntityDao().get(inQueryKey, getDomObject().getClass(), inDto);
 		inDto.copyFrom(oldEntity);
 	}
 
@@ -92,7 +91,7 @@ public abstract class CdseServiceAbstract<TDto extends CdseDto, TDom extends Cds
 	@Transactional
 	public List<TDto> getList(String inQueryKey, TDto inDto) {
 		
-		List<TDom> domainList = getEntityDao().getList(inQueryKey, getDomClass(), inDto);
+		List<TDom> domainList = getEntityDao().getList(inQueryKey, getDomObject().getClass(), inDto);
 		return null;
 	}
 

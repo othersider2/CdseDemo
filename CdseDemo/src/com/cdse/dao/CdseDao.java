@@ -12,7 +12,7 @@ public interface CdseDao< TDom extends CdseEntity, TDto extends CdseDto> {
 	void insertOrUpdate(TDom inEntity) throws IOException;
 	void update(TDom inEntity) throws IOException;
 	void delete(TDom inDom) throws IOException;
-	TDom get(String inQueryKey, Class<TDom> inClass, TDto inSpec);
-	List<TDom> getList(String inQueryKey, Class<TDom> inClass, TDto inSpec);
+	TDom get(String inQueryKey, Class<? extends CdseEntity> class1, TDto inSpec);
+	List<TDom> getList(String inQueryKey, Class<? extends CdseEntity> class1, TDto inSpec);
 //	<S> T get  (Class inClass, S inSpec) throws InstantiationException, IllegalAccessException;
 }

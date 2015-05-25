@@ -56,7 +56,10 @@
 	        </property>
 	 </bean>
  
-	<bean id="personService" class="com.cdse.service.PersonService"/>
+	<bean id="person" class="com.cdse.domain.Person" scope="prototype"/>
+	<bean id="personService" class="com.cdse.service.CdseServiceAbstract">
+		<lookup-method name="getDomObject" bean="person"/>
+	</bean>
 
 	<bean id="entityDao" class="com.cdse.dao.CdseDaoImpl">
 		<property name="queryMap">
