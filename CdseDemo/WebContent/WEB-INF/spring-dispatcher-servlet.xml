@@ -56,9 +56,11 @@
 	        </property>
 	 </bean>
  
+	<bean id="personTranslator" class="com.cdse.service.translator.PersonTranslator"/>
 	<bean id="person" class="com.cdse.domain.Person" scope="prototype"/>
 	<bean id="personService" class="com.cdse.service.CdseServiceAbstract">
 		<lookup-method name="getDomObject" bean="person"/>
+        <property name="translator" ref="personTranslator"/>
 	</bean>
 
 	<bean id="entityDao" class="com.cdse.dao.CdseDaoImpl">

@@ -10,11 +10,14 @@ import com.cdse.dao.CdseDao;
 import com.cdse.domain.CdseEntity;
 import com.cdse.domain.EntityState;
 import com.cdse.dto.CdseDto;
+import com.cdse.service.translator.CdseTranslator;
 
 public abstract class CdseServiceAbstract<TDom extends CdseEntity, TDto extends CdseDto> implements CdseService<TDto> {
 
 	@Autowired
 	private CdseDao<TDom, TDto> entityDao;
+	
+	private CdseTranslator<TDom, TDto> translator;
 	
 	protected abstract TDom getDomObject();
 
@@ -26,7 +29,7 @@ public abstract class CdseServiceAbstract<TDom extends CdseEntity, TDto extends 
 		TDom domainObject = getDomObject();
 		
 		// copy attributes from DTO to Domain object
-		inDto.copyTo(domainObject);
+		getTranslator().translateDtoToEntity(domainObject, inDto);
 		
 		// set the state
 		domainObject.setState(EntityState.NEW);
@@ -46,7 +49,7 @@ public abstract class CdseServiceAbstract<TDom extends CdseEntity, TDto extends 
 		TDom domainObject = getDomObject();
 
 		// copy attributes from DTO to Domain object
-		inDto.copyTo(domainObject);
+		getTranslator().translateDtoToEntity(domainObject, inDto);
 		
 		domainObject.populate();
 		
@@ -60,7 +63,7 @@ public abstract class CdseServiceAbstract<TDom extends CdseEntity, TDto extends 
 		TDom oldEntity = getEntityDao().get(inQueryKey, getDomObject(), inDto);
 		
 		// copy attributes from DTO to Domain object
-		inDto.copyTo(oldEntity);
+		getTranslator().translateDtoToEntity(oldEntity, inDto);
 		
 		// set the state
 		oldEntity.setState(EntityState.DIRTY);
@@ -75,7 +78,7 @@ public abstract class CdseServiceAbstract<TDom extends CdseEntity, TDto extends 
 		// create domain object
 		TDom domainObject = getDomObject();
 
-		inDto.copyTo(domainObject);
+		getTranslator().translateDtoToEntity(domainObject, inDto);
 		getEntityDao().delete(domainObject);
 	}
 
@@ -84,7 +87,7 @@ public abstract class CdseServiceAbstract<TDom extends CdseEntity, TDto extends 
 	public void get(String inQueryKey, TDto inDto) {
 
 		TDom oldEntity = getEntityDao().get(inQueryKey, getDomObject(), inDto);
-		inDto.copyFrom(oldEntity);
+		getTranslator().translateEntityToDto(oldEntity, inDto);
 	}
 
 	@Override
@@ -101,5 +104,13 @@ public abstract class CdseServiceAbstract<TDom extends CdseEntity, TDto extends 
 
 	public void setEntityDao(CdseDao<TDom, TDto> entityDao) {
 		this.entityDao = entityDao;
+	}
+
+	private CdseTranslator<TDom, TDto> getTranslator() {
+		return translator;
+	}
+
+	public void setTranslator(CdseTranslator<TDom, TDto> translator) {
+		this.translator = translator;
 	}
 }

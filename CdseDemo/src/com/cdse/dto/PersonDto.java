@@ -53,34 +53,6 @@ public class PersonDto implements CdseDto{
 		this.roleNames = roleNames;
 	}
 	@Override
-	public <TDom extends CdseEntity> void copyTo(TDom inPerson) {
-		Person person = (Person)inPerson;
-		if (this.getPersonId() != null) {
-			person.setPersonId(this.getId());
-		}
-		person.setFirstName(this.getFirstName());
-		person.setLastName(this.getLastName());
-		person.setPhotoPart(this.getPhotoPart());
-		for (String roleName : this.getRoleNames()) {       
-			
-			Role role = new Role();
-			role.setRoleName(roleName);
-			person.getRoles().add(role);
-		}
-	}
-	
-	@Override
-	public <TDom extends CdseEntity> void copyFrom(TDom inPerson) {
-		Person person = (Person)inPerson;
-		this.setFirstName(person.getFirstName());
-		this.setLastName(person.getLastName());
-		this.setPhotoPart(person.getPhotoPart());
-		for (Role role : person.getRoles()) {
-			this.getRoleNames().add(role.getRoleName());
-		}
-
-	}
-	@Override
 	public int getId() {
 		return Integer.parseInt(this.getPersonId());
 	}
