@@ -14,7 +14,6 @@ public class PersonTranslator implements CdseTranslator<Person, PersonDto>{
 		for (Role role : inPerson.getRoles()) {
 			inDto.getRoleNames().add(role.getRoleName());
 		}
-		
 	}
 	
 	@Override
