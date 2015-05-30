@@ -1,5 +1,5 @@
 
-package com.cdse.lookup;
+package net.lookup.person;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -17,7 +17,7 @@ import javax.xml.ws.ResponseWrapper;
  * Generated source version: 2.2
  * 
  */
-@WebService(name = "PersonLookup", targetNamespace = "http://lookup.cdse.com/")
+@WebService(name = "PersonLookup", targetNamespace = "http://person.lookup.net/")
 @XmlSeeAlso({
     ObjectFactory.class
 })
@@ -32,9 +32,9 @@ public interface PersonLookup {
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getPhoneNumber", targetNamespace = "http://lookup.cdse.com/", className = "com.cdse.lookup.GetPhoneNumber")
-    @ResponseWrapper(localName = "getPhoneNumberResponse", targetNamespace = "http://lookup.cdse.com/", className = "com.cdse.lookup.GetPhoneNumberResponse")
-    @Action(input = "http://lookup.cdse.com/PersonLookup/getPhoneNumberRequest", output = "http://lookup.cdse.com/PersonLookup/getPhoneNumberResponse")
+    @RequestWrapper(localName = "getPhoneNumber", targetNamespace = "http://person.lookup.net/", className = "net.lookup.person.GetPhoneNumber")
+    @ResponseWrapper(localName = "getPhoneNumberResponse", targetNamespace = "http://person.lookup.net/", className = "net.lookup.person.GetPhoneNumberResponse")
+    @Action(input = "http://person.lookup.net/PersonLookup/getPhoneNumberRequest", output = "http://person.lookup.net/PersonLookup/getPhoneNumberResponse")
     public String getPhoneNumber(
         @WebParam(name = "arg0", targetNamespace = "")
         String arg0);

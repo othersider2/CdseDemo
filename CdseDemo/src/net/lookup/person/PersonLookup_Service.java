@@ -1,5 +1,5 @@
 
-package com.cdse.lookup;
+package net.lookup.person;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -17,20 +17,20 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "PersonLookup", targetNamespace = "http://lookup.cdse.com/", wsdlLocation = "http://192.168.56.1:7001/CdseLookup/PersonLookup?WSDL")
+@WebServiceClient(name = "PersonLookup", targetNamespace = "http://person.lookup.net/", wsdlLocation = "http://192.168.56.1:7001/LookupWS/PersonLookup?WSDL")
 public class PersonLookup_Service
     extends Service
 {
 
     private final static URL PERSONLOOKUP_WSDL_LOCATION;
     private final static WebServiceException PERSONLOOKUP_EXCEPTION;
-    private final static QName PERSONLOOKUP_QNAME = new QName("http://lookup.cdse.com/", "PersonLookup");
+    private final static QName PERSONLOOKUP_QNAME = new QName("http://person.lookup.net/", "PersonLookup");
 
     static {
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("http://192.168.56.1:7001/CdseLookup/PersonLookup?WSDL");
+            url = new URL("http://192.168.56.1:7001/LookupWS/PersonLookup?WSDL");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
@@ -69,7 +69,7 @@ public class PersonLookup_Service
      */
     @WebEndpoint(name = "PersonLookupPort")
     public PersonLookup getPersonLookupPort() {
-        return super.getPort(new QName("http://lookup.cdse.com/", "PersonLookupPort"), PersonLookup.class);
+        return super.getPort(new QName("http://person.lookup.net/", "PersonLookupPort"), PersonLookup.class);
     }
 
     /**
@@ -81,7 +81,7 @@ public class PersonLookup_Service
      */
     @WebEndpoint(name = "PersonLookupPort")
     public PersonLookup getPersonLookupPort(WebServiceFeature... features) {
-        return super.getPort(new QName("http://lookup.cdse.com/", "PersonLookupPort"), PersonLookup.class, features);
+        return super.getPort(new QName("http://person.lookup.net/", "PersonLookupPort"), PersonLookup.class, features);
     }
 
     private static URL __getWsdlLocation() {

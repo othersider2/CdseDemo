@@ -3,8 +3,6 @@ package com.cdse.service.translator;
 import com.cdse.domain.Person;
 import com.cdse.domain.Role;
 import com.cdse.dto.PersonDto;
-import com.cdse.lookup.PersonLookup;
-import com.cdse.lookup.PersonLookup_Service;
 
 public class PersonTranslator implements CdseTranslator<Person, PersonDto>{
 
@@ -17,8 +15,8 @@ public class PersonTranslator implements CdseTranslator<Person, PersonDto>{
 			inDto.getRoleNames().add(role.getRoleName());
 		}
 		
-		PersonLookup_Service personLookupService = new PersonLookup_Service();
-		PersonLookup personLookup = personLookupService.getPersonLookupPort();
+		net.lookup.person.PersonLookup_Service personLookupService = new net.lookup.person.PersonLookup_Service();
+		net.lookup.person.PersonLookup personLookup = personLookupService.getPersonLookupPort();
 		@SuppressWarnings("unused")
 		String phoneNumber = personLookup.getPhoneNumber(inPerson.getLastName());
 	}
