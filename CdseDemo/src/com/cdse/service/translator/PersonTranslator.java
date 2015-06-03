@@ -28,30 +28,6 @@ public class PersonTranslator implements CdseTranslator<Person, PersonDto>{
 		@SuppressWarnings("unused")
 		String phoneNumber = personLookup.getPhoneNumber(inPerson.getLastName());
 		
-		try {
-			Client client = Client.create();
-			 
-			WebResource webResource = client
-			   .resource("http://localhost:7001/RestWS/rest/person");
-	 
-			ClientResponse response = webResource.accept(MediaType.TEXT_PLAIN)
-	                   .get(ClientResponse.class);
-	 
-			if (response.getStatus() != 200) {
-			   throw new RuntimeException("Failed : HTTP error code : "
-				+ response.getStatus());
-			}
-	 
-			String output = response.getEntity(String.class);
-	 
-			System.out.println("Output from Server .... \n");
-			System.out.println(output);
-	 
-		  } catch (Exception e) {
-	 
-			e.printStackTrace();
-	 
-		  }
 	 
 	}
 	

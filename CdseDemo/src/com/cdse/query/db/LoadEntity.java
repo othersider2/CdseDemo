@@ -1,4 +1,4 @@
-package com.cdse.query;
+package com.cdse.query.db;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,9 +9,10 @@ import org.springframework.stereotype.Repository;
 import com.cdse.domain.CdseEntity;
 import com.cdse.domain.Person;
 import com.cdse.dto.CdseDto;
+import com.cdse.query.CdseQuery;
 
 @Repository
-public class LoadEntity<TDom extends CdseEntity, TDto extends CdseDto> implements CdseQuery<TDom, TDto> {
+public class LoadEntity<TDom extends CdseEntity, TDto extends CdseDto> implements CdseQuery<SessionFactory, TDom, TDto> {
 
 	@SuppressWarnings("unchecked")
 	@Override

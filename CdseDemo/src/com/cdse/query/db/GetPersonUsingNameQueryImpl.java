@@ -1,4 +1,4 @@
-package com.cdse.query;
+package com.cdse.query.db;
 
 import java.util.List;
 
@@ -8,9 +8,10 @@ import org.springframework.stereotype.Repository;
 import com.cdse.domain.CdseEntity;
 import com.cdse.domain.Person;
 import com.cdse.dto.PersonDto;
+import com.cdse.query.CdseQuery;
 
 @Repository
-public class GetPersonUsingNameQueryImpl implements CdseQuery<Person, PersonDto> {
+public class GetPersonUsingNameQueryImpl implements CdseQuery<SessionFactory, Person, PersonDto> {
 
 	@Override
 	public List<Person> execute(SessionFactory inSessionFactory, Person inPrototype, PersonDto inPersonDto) {

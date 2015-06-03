@@ -63,7 +63,7 @@
         <property name="translator" ref="personTranslator"/>
 	</bean>
 
-	<bean id="entityDao" class="com.cdse.dao.CdseDaoImpl">
+	<bean id="entityDao" class="com.cdse.dao.db.CdseDbDaoImpl">
 		<property name="queryMap">
 			<map>
 				<entry key="matchId" value-ref="loadEntity"/>
@@ -72,8 +72,17 @@
 		</property>
 	</bean>
 
-	<bean id="loadEntity" class="com.cdse.query.LoadEntity"/>
-	<bean id="getPersonUsingNameQueryImpl" class="com.cdse.query.GetPersonUsingNameQueryImpl"/>
+	<bean id="restDao" class="com.cdse.dao.rest.CdseRestDaoImpl">
+		<property name="queryMap">
+			<map>
+				<entry key="matchLastName" value-ref="getRestPersonInfoQueryImpl"/> 
+			</map>
+		</property>
+	</bean>
+
+	<bean id="loadEntity" class="com.cdse.query.db.LoadEntity"/>
+	<bean id="getPersonUsingNameQueryImpl" class="com.cdse.query.db.GetPersonUsingNameQueryImpl"/>
+	<bean id="getRestPersonInfoQueryImpl" class="com.cdse.query.rest.GetRestPersonInfoQueryImpl"/>
 	
 	 <bean name="/createPerson.html" class="com.cdse.controller.PersonController" />
 	 <bean name="/updatePerson.html" class="com.cdse.controller.PersonController" />

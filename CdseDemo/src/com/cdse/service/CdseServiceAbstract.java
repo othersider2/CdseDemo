@@ -17,6 +17,9 @@ public abstract class CdseServiceAbstract<TDom extends CdseEntity, TDto extends 
 	@Autowired
 	private CdseDao<TDom, TDto> entityDao;
 	
+	@Autowired
+	private CdseDao<TDom, TDto> restDao;
+	
 	private CdseTranslator<TDom, TDto> translator;
 	
 	protected abstract TDom getDomObject();
@@ -36,6 +39,9 @@ public abstract class CdseServiceAbstract<TDom extends CdseEntity, TDto extends 
 		
 		// let the domain object(s) do the business logic without persistence
 		domainObject.populate();
+    	
+		// let the domain object(s) do the business logic without persistence
+		TDom wsObject = getRestDao().get(null, domainObject, null);
     	
     	// now that the domain object(s) have populated all attributes, persist the domain object(s) to the database
 		getEntityDao().insert(domainObject);
@@ -112,5 +118,13 @@ public abstract class CdseServiceAbstract<TDom extends CdseEntity, TDto extends 
 
 	public void setTranslator(CdseTranslator<TDom, TDto> translator) {
 		this.translator = translator;
+	}
+
+	public CdseDao<TDom, TDto> getRestDao() {
+		return restDao;
+	}
+
+	public void setRestDao(CdseDao<TDom, TDto> restDao) {
+		this.restDao = restDao;
 	}
 }

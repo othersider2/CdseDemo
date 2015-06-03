@@ -1,0 +1,75 @@
+package com.cdse.dao.db;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.cdse.dao.CdseDao;
+import com.cdse.domain.CdseEntity;
+import com.cdse.dto.CdseDto;
+import com.cdse.query.CdseQuery;
+
+@Repository
+public class CdseDbDaoImpl<TDom extends CdseEntity, TDto extends CdseDto> implements CdseDao<TDom, TDto> {
+
+	@Autowired
+    private SessionFactory sessionFactory;
+
+	private Map<String, CdseQuery<SessionFactory, TDom, TDto>> queryMap;
+
+	/* (non-Javadoc)
+	 * @see com.cdse.demo.dao.EntityDao#insert(com.cdse.demo.domain.Persons)
+	 */
+    @Override
+	public void insert(TDom inDom) throws IOException {
+
+		sessionFactory.getCurrentSession().save(inDom);
+    }
+
+	@Override
+	public void insertOrUpdate(TDom inDom) throws IOException {
+		sessionFactory.getCurrentSession().save(inDom);
+	}
+
+	@Override
+	public void update(TDom inDom) throws IOException {
+		sessionFactory.getCurrentSession().update(inDom);
+	}
+
+	@Override
+	public void delete(TDom inDom) throws IOException {
+		sessionFactory.getCurrentSession().delete(inDom);
+	}
+
+	@Override
+	public TDom get(String inQueryKey, TDom inPrototype, TDto inDto) {
+		return getList(inQueryKey, inPrototype, inDto).get(0);
+	}
+
+	@Override
+	public List<TDom> getList(String inQueryKey, TDom inPrototype, TDto inDto) {
+		CdseQuery<SessionFactory, TDom, TDto> cdseQuery = getQueryMap().get(inQueryKey);
+		return cdseQuery.execute(sessionFactory, inPrototype, inDto);
+	}
+
+	public Map<String, CdseQuery<SessionFactory, TDom, TDto>> getQueryMap() {
+		return queryMap;
+	}
+
+	public void setQueryMap(Map<String, CdseQuery<SessionFactory, TDom, TDto>> queryMap) {
+		this.queryMap = queryMap;
+	}
+
+
+//	@Override
+//	public <S> T get(Class inClass, S inSpec) throws InstantiationException, IllegalAccessException{
+//		@SuppressWarnings("unchecked")
+//		CdseQuery<T,S> query = (CdseQuery<T, S>) inClass.newInstance();;
+//		return query.execute(inSpec);
+//	}
+
+}

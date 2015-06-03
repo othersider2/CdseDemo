@@ -1,24 +1,26 @@
-package com.cdse.dao;
+package com.cdse.dao.rest;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cdse.dao.CdseDao;
 import com.cdse.domain.CdseEntity;
 import com.cdse.dto.CdseDto;
 import com.cdse.query.CdseQuery;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.WebResource;
 
 @Repository
-public class CdseDaoImpl<TDom extends CdseEntity, TDto extends CdseDto> implements CdseDao<TDom, TDto> {
+public class CdseRestDaoImpl<TDom extends CdseEntity, TDto extends CdseDto> implements CdseDao<TDom, TDto> {
 
 	@Autowired
-    private SessionFactory sessionFactory;
+    private WebResource webResource;
 
-	private Map<String, CdseQuery<TDom, TDto>> queryMap;
+	private Map<String, CdseQuery<WebResource, TDom, TDto>> queryMap;
 
 	/* (non-Javadoc)
 	 * @see com.cdse.demo.dao.EntityDao#insert(com.cdse.demo.domain.Persons)
@@ -26,22 +28,22 @@ public class CdseDaoImpl<TDom extends CdseEntity, TDto extends CdseDto> implemen
     @Override
 	public void insert(TDom inDom) throws IOException {
 
-		sessionFactory.getCurrentSession().save(inDom);
+//		webResource.getCurrentSession().save(inDom);
     }
 
 	@Override
 	public void insertOrUpdate(TDom inDom) throws IOException {
-		sessionFactory.getCurrentSession().save(inDom);
+//		webResource.getCurrentSession().save(inDom);
 	}
 
 	@Override
 	public void update(TDom inDom) throws IOException {
-		sessionFactory.getCurrentSession().update(inDom);
+//		webResource.getCurrentSession().update(inDom);
 	}
 
 	@Override
 	public void delete(TDom inDom) throws IOException {
-		sessionFactory.getCurrentSession().delete(inDom);
+//		webResource.getCurrentSession().delete(inDom);
 	}
 
 	@Override
@@ -51,15 +53,20 @@ public class CdseDaoImpl<TDom extends CdseEntity, TDto extends CdseDto> implemen
 
 	@Override
 	public List<TDom> getList(String inQueryKey, TDom inPrototype, TDto inDto) {
-		CdseQuery<TDom, TDto> cdseQuery = getQueryMap().get(inQueryKey);
-		return cdseQuery.execute(sessionFactory, inPrototype, inDto);
+		Client client = Client.create();
+		 
+		WebResource webResource = client
+		   .resource("http://localhost:7001/RestWS/rest/person");
+ 
+		CdseQuery<WebResource, TDom, TDto> cdseQuery = getQueryMap().get(inQueryKey);
+		return cdseQuery.execute(webResource, inPrototype, inDto);
 	}
 
-	public Map<String, CdseQuery<TDom, TDto>> getQueryMap() {
+	public Map<String, CdseQuery<WebResource, TDom, TDto>> getQueryMap() {
 		return queryMap;
 	}
 
-	public void setQueryMap(Map<String, CdseQuery<TDom, TDto>> queryMap) {
+	public void setQueryMap(Map<String, CdseQuery<WebResource, TDom, TDto>> queryMap) {
 		this.queryMap = queryMap;
 	}
 
