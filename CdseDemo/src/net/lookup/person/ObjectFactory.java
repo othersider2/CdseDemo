@@ -24,8 +24,8 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _GetPhoneNumber_QNAME = new QName("http://person.lookup.net/", "getPhoneNumber");
-    private final static QName _GetPhoneNumberResponse_QNAME = new QName("http://person.lookup.net/", "getPhoneNumberResponse");
+    private final static QName _GetPersonWS_QNAME = new QName("http://person.lookup.net/", "getPersonWS");
+    private final static QName _GetPersonWSResponse_QNAME = new QName("http://person.lookup.net/", "getPersonWSResponse");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: net.lookup.person
@@ -35,37 +35,45 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link GetPhoneNumber }
+     * Create an instance of {@link GetPersonWS }
      * 
      */
-    public GetPhoneNumber createGetPhoneNumber() {
-        return new GetPhoneNumber();
+    public GetPersonWS createGetPersonWS() {
+        return new GetPersonWS();
     }
 
     /**
-     * Create an instance of {@link GetPhoneNumberResponse }
+     * Create an instance of {@link GetPersonWSResponse }
      * 
      */
-    public GetPhoneNumberResponse createGetPhoneNumberResponse() {
-        return new GetPhoneNumberResponse();
+    public GetPersonWSResponse createGetPersonWSResponse() {
+        return new GetPersonWSResponse();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetPhoneNumber }{@code >}}
+     * Create an instance of {@link PersonWS }
      * 
      */
-    @XmlElementDecl(namespace = "http://person.lookup.net/", name = "getPhoneNumber")
-    public JAXBElement<GetPhoneNumber> createGetPhoneNumber(GetPhoneNumber value) {
-        return new JAXBElement<GetPhoneNumber>(_GetPhoneNumber_QNAME, GetPhoneNumber.class, null, value);
+    public PersonWS createPersonWS() {
+        return new PersonWS();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link GetPhoneNumberResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetPersonWS }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://person.lookup.net/", name = "getPhoneNumberResponse")
-    public JAXBElement<GetPhoneNumberResponse> createGetPhoneNumberResponse(GetPhoneNumberResponse value) {
-        return new JAXBElement<GetPhoneNumberResponse>(_GetPhoneNumberResponse_QNAME, GetPhoneNumberResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://person.lookup.net/", name = "getPersonWS")
+    public JAXBElement<GetPersonWS> createGetPersonWS(GetPersonWS value) {
+        return new JAXBElement<GetPersonWS>(_GetPersonWS_QNAME, GetPersonWS.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetPersonWSResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://person.lookup.net/", name = "getPersonWSResponse")
+    public JAXBElement<GetPersonWSResponse> createGetPersonWSResponse(GetPersonWSResponse value) {
+        return new JAXBElement<GetPersonWSResponse>(_GetPersonWSResponse_QNAME, GetPersonWSResponse.class, null, value);
     }
 
 }

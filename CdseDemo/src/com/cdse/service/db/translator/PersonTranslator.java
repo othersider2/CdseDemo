@@ -1,4 +1,4 @@
-package com.cdse.service.translator;
+package com.cdse.service.db.translator;
 
 import javax.ws.rs.core.MediaType;
 
@@ -8,6 +8,7 @@ import net.lookup.person.PersonLookup_Service;
 import com.cdse.domain.Person;
 import com.cdse.domain.Role;
 import com.cdse.dto.PersonDto;
+import com.cdse.service.translator.CdseTranslator;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -22,13 +23,6 @@ public class PersonTranslator implements CdseTranslator<Person, PersonDto>{
 		for (Role role : inPerson.getRoles()) {
 			inDto.getRoleNames().add(role.getRoleName());
 		}
-		
-		PersonLookup_Service personLookupService = new PersonLookup_Service();
-		PersonLookup personLookup = personLookupService.getPersonLookupPort();
-		@SuppressWarnings("unused")
-		String phoneNumber = personLookup.getPhoneNumber(inPerson.getLastName());
-		
-	 
 	}
 	
 	@Override

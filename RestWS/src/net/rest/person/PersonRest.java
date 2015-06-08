@@ -11,6 +11,16 @@ import javax.ws.rs.core.MediaType;
 public class PersonRest {
 	
 	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public PersonJSon getJsonPersonInfo() {
+		
+		PersonJSon personJSon = new PersonJSon();
+		personJSon.setPhoneNumber("555-555-5555");
+		
+		return personJSon;
+	}
+	
+	@GET
 	@Produces(MediaType.TEXT_HTML)
 	public String getHtmlPersonInfo() {
 		return "<html> " + "<title>" + "Phone Number" + "</title>" 

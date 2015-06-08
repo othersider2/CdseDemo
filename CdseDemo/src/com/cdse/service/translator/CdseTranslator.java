@@ -1,9 +1,6 @@
 package com.cdse.service.translator;
 
-import com.cdse.domain.CdseEntity;
-import com.cdse.dto.CdseDto;
-
-public interface CdseTranslator<TDom extends CdseEntity, TDto extends CdseDto> {
-	void translateEntityToDto(TDom inDom, TDto inDto);
-	void translateDtoToEntity(TDom inDom, TDto inDto);
+public interface CdseTranslator<TResource, TOutDto> {
+	void translateEntityToDto(TResource inResource, TOutDto inOutDto);
+	void translateDtoToEntity(TResource inResource, TOutDto inOutDto);
 }

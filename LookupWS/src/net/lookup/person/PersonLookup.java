@@ -6,7 +6,9 @@ import javax.jws.*;
 public class PersonLookup {
 
 	@WebMethod
-	public String getPhoneNumber(String inName) {
-		return "555-555-5555";
+	public PersonWS getPersonWS(String inName) {
+		PersonWS personWs= new PersonWS();
+		personWs.setPhoneNumber("555-555-5555");
+		return personWs;
 	}
 }

@@ -1,6 +1,8 @@
 package com.cdse.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -17,13 +19,17 @@ import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cdse.dto.PersonDto;
-import com.cdse.service.CdseService;
+import com.cdse.service.ReadService;
+import com.cdse.service.WriteService;
 
 @Controller
 public class PersonController {
 	
 	@Autowired
-	CdseService<PersonDto> personService;
+	WriteService<PersonDto> personWriteService;
+
+	@Autowired
+	ReadService<PersonDto, PersonDto> personReadService;
 
 	@ModelAttribute
     public void addingCommonObjects(Model model1) {
@@ -43,7 +49,7 @@ public class PersonController {
 	
 		ModelAndView model1 = null;
 		try {
-			personService.insert(personDto);
+			personWriteService.execute("create", personDto);
 			model1 = new ModelAndView("UploadSuccess");
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -57,7 +63,8 @@ public class PersonController {
 	
 		ModelAndView model1 = null;
 		try {
-			personService.update("matchId", personDto);
+			personDto.setPersonId("97");
+			personWriteService.execute("update", personDto);
 			model1 = new ModelAndView("UploadSuccess");
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -66,12 +73,17 @@ public class PersonController {
 		return model1;
 	}
 	
-	@RequestMapping(value="/getPerson.html", method = RequestMethod.POST)
+	@RequestMapping(value="/getPersonUsingName.html", method = RequestMethod.POST)
 	public ModelAndView getPersonForm(@ModelAttribute("person") PersonDto personDto) {
-	
+		List<PersonDto> personList = new ArrayList<PersonDto>();
 		ModelAndView model1 = null;
-		personService.get("matchId", personDto);
+		try {
+			personReadService.execute("getUsingId", personDto, personList);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		model1 = new ModelAndView("DownloadSuccess");
+		model1.addObject("outPerson", personList.get(0));
 		
 		return model1;
 	}

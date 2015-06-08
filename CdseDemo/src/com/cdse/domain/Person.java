@@ -82,9 +82,6 @@ public class Person implements CdseEntity{
 	private String lastName;
 	
 	@Transient
-	private String phoneNumber;
-	
-	@Transient
 	private MultipartFile photoPart;
 	
 	private Blob photo;
@@ -142,13 +139,5 @@ public class Person implements CdseEntity{
 	@Override
 	public void setState(EntityState state) {
 		this.state = state;
-	}
-
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
 	}
 }

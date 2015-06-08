@@ -56,55 +56,91 @@
 	        </property>
 	 </bean>
  
-	<bean id="personTranslator" class="com.cdse.service.translator.PersonTranslator"/>
-	<bean id="person" class="com.cdse.domain.Person" scope="prototype"/>
-	<bean id="personService" class="com.cdse.service.CdseServiceAbstract">
+	<bean id="personReadService" class="com.cdse.service.CompositeService">
+		<property name="readServiceList">
+			<list>
+				<ref bean="dbPersonReadService" />
+				<ref bean="soapPersonReadService" />
+			</list>
+		</property>	
+	</bean>
+
+	
+	<bean id="dbPersonReadService" class="com.cdse.service.db.DbReadServiceImpl">
+		<property name="readDaoMap" ref="readDaoMapTempl"/>
+		<lookup-method name="getDomObject" bean="person"/>
+		<lookup-method name="getOutDto" bean="personDto"/>
+        <property name="translator" ref="personTranslator"/>
+	</bean>
+
+	<bean id="soapPersonReadService" class="com.cdse.service.WsReadServiceImpl">
+		<property name="readDaoMap" ref="soapReadDaoMapTempl"/>
+		<lookup-method name="getDomObject" bean="person"/>
+		<lookup-method name="getOutDto" bean="personDto"/>
+        <property name="translator" ref="soapPersonTranslator"/>
+	</bean>
+
+	<bean id="personWriteService" class="com.cdse.service.db.WriteServiceImpl">
+		<property name="writeDaoMap" ref="writeDaoMapTempl"/>
 		<lookup-method name="getDomObject" bean="person"/>
         <property name="translator" ref="personTranslator"/>
 	</bean>
 
-	<bean id="entityDao" class="com.cdse.dao.db.CdseDbDaoImpl">
-		<property name="queryMap">
-			<map>
-				<entry key="matchId" value-ref="loadEntity"/>
-				<entry key="matchLastName" value-ref="getPersonUsingNameQueryImpl"/> 
-			</map>
-		</property>
-	</bean>
+	<bean id="soapPersonTranslator" class="com.cdse.service.soap.translator.PersonTranslator"/>
+	<bean id="personTranslator" class="com.cdse.service.db.translator.PersonTranslator"/>
+	<bean id="person" class="com.cdse.domain.Person" scope="prototype"/>
+	<bean id="personWS" class="net.lookup.person.PersonWS" scope="prototype"/>
+	<bean id="personDto" class="com.cdse.dto.PersonDto" scope="prototype"/>
 
-	<bean id="restDao" class="com.cdse.dao.rest.CdseRestDaoImpl">
-		<property name="queryMap">
-			<map>
-				<entry key="matchLastName" value-ref="getRestPersonInfoQueryImpl"/> 
-			</map>
-		</property>
-	</bean>
-
-	<bean id="loadEntity" class="com.cdse.query.db.LoadEntity"/>
-	<bean id="getPersonUsingNameQueryImpl" class="com.cdse.query.db.GetPersonUsingNameQueryImpl"/>
-	<bean id="getRestPersonInfoQueryImpl" class="com.cdse.query.rest.GetRestPersonInfoQueryImpl"/>
-	
 	 <bean name="/createPerson.html" class="com.cdse.controller.PersonController" />
 	 <bean name="/updatePerson.html" class="com.cdse.controller.PersonController" />
-	 <bean name="/getPerson.html" class="com.cdse.controller.PersonController" />
-  
-<!-- 	 <bean name="/createPerson.html" class="com.cdse.controller.FileUploadDBController" > -->
-<!-- 		<property name="serviceMap"> -->
-<!-- 			<map> -->
-<!-- 				<entry key="createPerson" value-ref="createPersonervice"/>  -->
-<!-- 				<entry key="matchLastName" value-ref="SimpleGetterService"/>  -->
-<!-- 			</map> -->
-<!-- 		</property> -->
-<!-- 	</bean> -->
-  
-<!-- 	<util:map id="servicesMap" map-class="java.util.HashMap" -->
-<!--   		key-type="java.lang.String" value-type="com.cdse.service.IService" > -->
-<!-- 		    <entry> -->
-<!-- 		        <key> -->
-<!-- 		            <value>"com.cdse.domain.Person"</value> -->
-<!-- 		        </key> -->
-<!-- 		        <ref bean="Personervice"/> -->
-<!-- 		    </entry> -->
-<!-- 	</util:map> -->
+	 <bean name="/getPersonUsingName.html" class="com.cdse.controller.PersonController" />
+    
+	<util:map id="readDaoMapTempl" map-class="java.util.HashMap"
+  		key-type="java.lang.String" value-type="om.cdse.dao.db.DbReadDao" >
+		    <entry>
+		        <key>
+		            <value>getPersonUsingName</value>
+		        </key>
+		        <ref bean="getPersonUsingNameQueryImpl"/>
+		    </entry>
+		    <entry>
+		        <key>
+		            <value>getUsingId</value>
+		        </key>
+		        <ref bean="getUsingId"/>
+		    </entry>
+	</util:map>
 
+	<util:map id="soapReadDaoMapTempl" map-class="java.util.HashMap"
+  		key-type="java.lang.String" value-type="om.cdse.dao.ReadDao" >
+		    <entry>
+		        <key>
+		            <value>getUsingId</value>
+		        </key>
+		        <ref bean="soapGetUsingId"/>
+		    </entry>
+	</util:map>
+
+	<bean id="soapGetUsingId" class="com.cdse.dao.soap.SoapGetPersonUsingId"/>
+	<bean id="getUsingId" class="com.cdse.dao.db.GetUsingId"/>
+	<bean id="getPersonUsingNameQueryImpl" class="com.cdse.dao.db.GetPersonUsingNameQueryImpl"/>
+	
+	<util:map id="writeDaoMapTempl" map-class="java.util.HashMap"
+  		key-type="java.lang.String" value-type="om.cdse.dao.db.WriteDao" >
+		    <entry>
+		        <key>
+		            <value>create</value>
+		        </key>
+		        <ref bean="saveDao"/>
+		    </entry>
+		    <entry>
+		        <key>
+		            <value>update</value>
+		        </key>
+		        <ref bean="saveDao"/>
+		    </entry>
+	</util:map>
+
+	<bean id="saveDao" class="com.cdse.dao.db.DbSaveDao"/>
 </beans>

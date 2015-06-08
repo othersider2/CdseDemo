@@ -17,11 +17,9 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.cdse.controller.PersonController;
-import com.cdse.dao.CdseDao;
 import com.cdse.domain.CdseEntity;
 import com.cdse.domain.Person;
 import com.cdse.domain.EntityState;
-import com.cdse.service.CdseServiceAbstract;
 
 //@RunWith(MockitoJUnitRunner.class)
 public class CdseServiceImplTest {

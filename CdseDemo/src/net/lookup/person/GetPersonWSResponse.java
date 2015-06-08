@@ -3,20 +3,21 @@ package net.lookup.person;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for getPhoneNumber complex type.
+ * <p>Java class for getPersonWSResponse complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="getPhoneNumber">
+ * &lt;complexType name="getPersonWSResponse">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="arg0" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="return" type="{http://person.lookup.net/}personWS" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -26,35 +27,36 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "getPhoneNumber", propOrder = {
-    "arg0"
+@XmlType(name = "getPersonWSResponse", propOrder = {
+    "_return"
 })
-public class GetPhoneNumber {
+public class GetPersonWSResponse {
 
-    protected String arg0;
+    @XmlElement(name = "return")
+    protected PersonWS _return;
 
     /**
-     * Gets the value of the arg0 property.
+     * Gets the value of the return property.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link PersonWS }
      *     
      */
-    public String getArg0() {
-        return arg0;
+    public PersonWS getReturn() {
+        return _return;
     }
 
     /**
-     * Sets the value of the arg0 property.
+     * Sets the value of the return property.
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link PersonWS }
      *     
      */
-    public void setArg0(String value) {
-        this.arg0 = value;
+    public void setReturn(PersonWS value) {
+        this._return = value;
     }
 
 }

@@ -1,22 +1,26 @@
-package com.cdse.query.db;
+package com.cdse.dao.db;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.cdse.domain.CdseEntity;
 import com.cdse.domain.Person;
 import com.cdse.dto.PersonDto;
-import com.cdse.query.CdseQuery;
 
 @Repository
-public class GetPersonUsingNameQueryImpl implements CdseQuery<SessionFactory, Person, PersonDto> {
+public class GetPersonUsingNameQueryImpl implements DbReadDao<Person, PersonDto> {
+
+	@Autowired
+    private SessionFactory sessionFactory;
 
 	@Override
-	public List<Person> execute(SessionFactory inSessionFactory, Person inPrototype, PersonDto inPersonDto) {
+	public List<Person> execute(Person inPrototype, PersonDto inPersonDto) {
 		@SuppressWarnings("unchecked")
-		List<Person> persons = inSessionFactory.getCurrentSession().createQuery(
+		List<Person> persons = sessionFactory.getCurrentSession().createQuery(
 			    "from Persons as person where person.lastName = ?")
 			    .setString(0, inPersonDto.getLastName())
 			    .list();

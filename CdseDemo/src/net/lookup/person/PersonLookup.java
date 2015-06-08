@@ -28,14 +28,14 @@ public interface PersonLookup {
      * 
      * @param arg0
      * @return
-     *     returns java.lang.String
+     *     returns net.lookup.person.PersonWS
      */
     @WebMethod
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "getPhoneNumber", targetNamespace = "http://person.lookup.net/", className = "net.lookup.person.GetPhoneNumber")
-    @ResponseWrapper(localName = "getPhoneNumberResponse", targetNamespace = "http://person.lookup.net/", className = "net.lookup.person.GetPhoneNumberResponse")
-    @Action(input = "http://person.lookup.net/PersonLookup/getPhoneNumberRequest", output = "http://person.lookup.net/PersonLookup/getPhoneNumberResponse")
-    public String getPhoneNumber(
+    @RequestWrapper(localName = "getPersonWS", targetNamespace = "http://person.lookup.net/", className = "net.lookup.person.GetPersonWS")
+    @ResponseWrapper(localName = "getPersonWSResponse", targetNamespace = "http://person.lookup.net/", className = "net.lookup.person.GetPersonWSResponse")
+    @Action(input = "http://person.lookup.net/PersonLookup/getPersonWSRequest", output = "http://person.lookup.net/PersonLookup/getPersonWSResponse")
+    public PersonWS getPersonWS(
         @WebParam(name = "arg0", targetNamespace = "")
         String arg0);
 
