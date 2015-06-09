@@ -7,15 +7,15 @@ import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cdse.dao.db.DbReadDao;
+import com.cdse.dao.ReadDao;
 import com.cdse.domain.CdseEntity;
 import com.cdse.dto.CdseDto;
 import com.cdse.service.ReadService;
 import com.cdse.translator.CdseTranslator;
 
-public abstract class DbReadServiceImpl<TDom extends CdseEntity, TInDto extends CdseDto, TOutDto> implements DbReadService<TDom, TInDto, TOutDto> {
+public abstract class DbReadServiceImpl<TDom, TInDto extends CdseDto, TOutDto> implements ReadService<TInDto, TOutDto> {
 
-	private Map<String, DbReadDao<TDom, TInDto>> readDaoMap;
+	private Map<String, ReadDao<TDom, TInDto>> readDaoMap;
 
 	private CdseTranslator<TDom, TOutDto> translator;
 	
@@ -26,7 +26,7 @@ public abstract class DbReadServiceImpl<TDom extends CdseEntity, TInDto extends 
 	@Override
 	@Transactional
 	public void execute(String inRequestMapping, TInDto inDto, List<TOutDto> inOutDtoList) throws IOException {
-		DbReadDao<TDom, TInDto> readDao = getReadDaoMap().get(inRequestMapping);
+		ReadDao<TDom, TInDto> readDao = getReadDaoMap().get(inRequestMapping);
 		List<TDom> entityList = readDao.execute(getDomObject(), inDto);
 		
 		for (TDom entity : entityList) {
@@ -44,11 +44,11 @@ public abstract class DbReadServiceImpl<TDom extends CdseEntity, TInDto extends 
 		this.translator = translator;
 	}
 
-	public Map<String, DbReadDao<TDom, TInDto>> getReadDaoMap() {
+	public Map<String, ReadDao<TDom, TInDto>> getReadDaoMap() {
 		return readDaoMap;
 	}
 
-	public void setReadDaoMap(Map<String, DbReadDao<TDom, TInDto>> readDaoMap) {
+	public void setReadDaoMap(Map<String, ReadDao<TDom, TInDto>> readDaoMap) {
 		this.readDaoMap = readDaoMap;
 	}
 

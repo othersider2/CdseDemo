@@ -8,7 +8,6 @@ import java.util.Map;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdse.dao.ReadDao;
-import com.cdse.dao.db.DbReadDao;
 import com.cdse.domain.CdseEntity;
 import com.cdse.dto.CdseDto;
 import com.cdse.service.ReadService;
@@ -28,12 +27,12 @@ public abstract class WsReadServiceImpl<TResource, TDto extends CdseDto, TOutDto
 	@Transactional
 	public void execute(String inRequestMapping, TDto inDto, List<TOutDto> inOutDtoList) throws IOException {
 		// TODO Auto-generated method stub
-		ReadDao<TResource, TDto> readDao = getReadDaoMap().get(inRequestMapping);
-		List<TResource> entityList = readDao.execute(null, inDto);
 		
-		TOutDto outDto = getOutDto();
-		getTranslator().translateEntityToDto(entityList.get(0), outDto);
-		inOutDtoList.add(outDto);
+		for (TOutDto outDto : inOutDtoList) {
+			ReadDao<TResource, TDto> readDao = getReadDaoMap().get(inRequestMapping);
+			List<TResource> entityList = readDao.execute(null, inDto);
+			getTranslator().translateEntityToDto(entityList.get(0), outDto);
+		}	
 	}
 
 //	private CdseTranslator<TResource, TDto> getTranslator() {

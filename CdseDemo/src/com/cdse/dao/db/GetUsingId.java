@@ -7,12 +7,13 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cdse.dao.ReadDao;
 import com.cdse.domain.CdseEntity;
 import com.cdse.domain.Person;
 import com.cdse.dto.CdseDto;
 
 @Repository
-public class GetUsingId<TDom extends CdseEntity, TDto extends CdseDto> implements DbReadDao<TDom, TDto> {
+public class GetUsingId<TDom extends CdseEntity, TDto extends CdseDto> implements ReadDao<TDom, TDto> {
 
 	@Autowired
     private SessionFactory sessionFactory;
