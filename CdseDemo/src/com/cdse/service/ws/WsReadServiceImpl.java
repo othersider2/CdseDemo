@@ -13,9 +13,9 @@ import com.cdse.dto.CdseDto;
 import com.cdse.service.ReadService;
 import com.cdse.translator.CdseTranslator;
 
-public abstract class WsReadServiceImpl<TResource, TDto extends CdseDto, TOutDto> implements ReadService<TDto, TOutDto> {
+public abstract class WsReadServiceImpl<TResource, TInDto extends CdseDto, TOutDto extends CdseDto> implements ReadService<TInDto, TOutDto> {
 
-	private Map<String, ReadDao<TResource, TDto>> readDaoMap;
+	private Map<String, ReadDao<TResource, TOutDto>> readDaoMap;
 
 	private CdseTranslator<TResource, TOutDto> translator;
 //	
@@ -25,29 +25,29 @@ public abstract class WsReadServiceImpl<TResource, TDto extends CdseDto, TOutDto
 
 	@Override
 	@Transactional
-	public void execute(String inRequestMapping, TDto inDto, List<TOutDto> inOutDtoList) throws IOException {
+	public void execute(String inRequestMapping, TInDto inDto, List<TOutDto> inOutDtoList) throws IOException {
 		// TODO Auto-generated method stub
 		
 		for (TOutDto outDto : inOutDtoList) {
-			ReadDao<TResource, TDto> readDao = getReadDaoMap().get(inRequestMapping);
-			List<TResource> entityList = readDao.execute(null, inDto);
+			ReadDao<TResource, TOutDto> readDao = getReadDaoMap().get(inRequestMapping);
+			List<TResource> entityList = readDao.execute(null, outDto);
 			getTranslator().translateEntityToDto(entityList.get(0), outDto);
 		}	
 	}
 
-//	private CdseTranslator<TResource, TDto> getTranslator() {
+//	private CdseTranslator<TResource, TInDto> getTranslator() {
 //		return translator;
 //	}
 //
-//	public void setTranslator(CdseTranslator<TResource, TDto> translator) {
+//	public void setTranslator(CdseTranslator<TResource, TInDto> translator) {
 //		this.translator = translator;
 //	}
 //
-	public Map<String, ReadDao<TResource, TDto>> getReadDaoMap() {
+	public Map<String, ReadDao<TResource, TOutDto>> getReadDaoMap() {
 		return readDaoMap;
 	}
 
-	public void setReadDaoMap(Map<String, ReadDao<TResource, TDto>> readDaoMap) {
+	public void setReadDaoMap(Map<String, ReadDao<TResource, TOutDto>> readDaoMap) {
 		this.readDaoMap = readDaoMap;
 	}
 
