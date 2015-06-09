@@ -10,7 +10,7 @@ import com.cdse.domain.CdseEntity;
 import com.cdse.domain.EntityState;
 import com.cdse.dto.CdseDto;
 import com.cdse.service.WriteService;
-import com.cdse.service.translator.CdseTranslator;
+import com.cdse.translator.CdseTranslator;
 
 public abstract class WriteServiceImpl<TDom extends CdseEntity, TInDto extends CdseDto> implements WriteService<TInDto> {
 

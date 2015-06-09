@@ -11,7 +11,7 @@ import com.cdse.dao.db.DbReadDao;
 import com.cdse.domain.CdseEntity;
 import com.cdse.dto.CdseDto;
 import com.cdse.service.ReadService;
-import com.cdse.service.translator.CdseTranslator;
+import com.cdse.translator.CdseTranslator;
 
 public abstract class DbReadServiceImpl<TDom extends CdseEntity, TInDto extends CdseDto, TOutDto> implements DbReadService<TDom, TInDto, TOutDto> {
 
@@ -33,8 +33,7 @@ public abstract class DbReadServiceImpl<TDom extends CdseEntity, TInDto extends 
 			TOutDto outDto = getOutDto();
 			getTranslator().translateEntityToDto(entity, outDto);
 			inOutDtoList.add(outDto);
-		}
-		
+		}	
 	}
 
 	private CdseTranslator<TDom, TOutDto> getTranslator() {

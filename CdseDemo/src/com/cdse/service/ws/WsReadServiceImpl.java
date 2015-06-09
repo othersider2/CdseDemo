@@ -1,4 +1,4 @@
-package com.cdse.service;
+package com.cdse.service.ws;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -11,7 +11,8 @@ import com.cdse.dao.ReadDao;
 import com.cdse.dao.db.DbReadDao;
 import com.cdse.domain.CdseEntity;
 import com.cdse.dto.CdseDto;
-import com.cdse.service.translator.CdseTranslator;
+import com.cdse.service.ReadService;
+import com.cdse.translator.CdseTranslator;
 
 public abstract class WsReadServiceImpl<TResource, TDto extends CdseDto, TOutDto> implements ReadService<TDto, TOutDto> {
 
