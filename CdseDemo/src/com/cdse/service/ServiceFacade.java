@@ -7,9 +7,13 @@ import java.util.List;
 import java.util.Map;
 
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cdse.dto.Identifiable;
+import com.cdse.service.read.ReadService;
+import com.cdse.service.write.WriteService;
 
 public class ServiceFacade<TinDto extends Identifiable, TOutDto> implements CdseService<TinDto, TOutDto> {
 
@@ -48,14 +52,14 @@ public class ServiceFacade<TinDto extends Identifiable, TOutDto> implements Cdse
 	@Override
 	public List<TOutDto> getList(String inRequstMapping, TinDto inInDto) {
 		
-		Map<String, TOutDto> map = new HashMap<String, TOutDto>();
+		Map<String, TOutDto> outDtoMap = new HashMap<String, TOutDto>();
 		try {
-			getReadService().execute("getUsingId", inInDto, map);
+			getReadService().execute("getUsingId", inInDto, outDtoMap);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		return new ArrayList<TOutDto>(map.values());
+		return new ArrayList<TOutDto>(outDtoMap.values());
 	}
 
 	public WriteService<TinDto> getWriteService() {

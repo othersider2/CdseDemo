@@ -1,10 +1,10 @@
-package com.cdse.service;
+package com.cdse.service.read;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-public class CompositeService<TInDto, TOutDto> implements ReadService<TInDto, TOutDto> {
+public class CompositeReadService<TInDto, TOutDto> implements ReadService<TInDto, TOutDto> {
 	
 	private List<ReadService<TInDto, TOutDto>> readServiceList;
 	

@@ -1,4 +1,4 @@
-package com.cdse.service.db;
+package com.cdse.service.write;
 
 import java.io.IOException;
 import java.util.Map;
@@ -9,7 +9,6 @@ import com.cdse.dao.db.WriteDao;
 import com.cdse.domain.CdseEntity;
 import com.cdse.domain.EntityState;
 import com.cdse.dto.Identifiable;
-import com.cdse.service.WriteService;
 import com.cdse.translator.CdseTranslator;
 
 public abstract class WriteServiceImpl<TDom extends CdseEntity, TInDto extends Identifiable> implements WriteService<TInDto> {

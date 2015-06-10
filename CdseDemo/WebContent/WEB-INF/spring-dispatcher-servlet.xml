@@ -56,7 +56,7 @@
 	        </property>
 	 </bean>
  
-	<bean id="personReadService" class="com.cdse.service.CompositeService">
+	<bean id="personReadService" class="com.cdse.service.read.CompositeReadService">
 		<property name="readServiceList">
 			<list>
 				<ref bean="dbPersonReadService" />
@@ -71,21 +71,21 @@
         <property name="writeService" ref="personWriteService"/>
 	</bean>
 
-	<bean id="dbPersonReadService" class="com.cdse.service.ReadServiceImpl">
+	<bean id="dbPersonReadService" class="com.cdse.service.read.ReadServiceImpl">
 		<property name="readDaoMap" ref="readDaoMapTempl"/>
 		<lookup-method name="getDomObject" bean="person"/>
 		<lookup-method name="getOutDto" bean="personDto"/>
         <property name="translator" ref="personTranslator"/>
 	</bean>
 
-	<bean id="soapPersonReadService" class="com.cdse.service.ReadServiceImpl">
+	<bean id="soapPersonReadService" class="com.cdse.service.read.ReadServiceImpl">
 		<property name="readDaoMap" ref="soapReadDaoMapTempl"/>
 		<lookup-method name="getDomObject" bean="personWsAdapter"/>
 		<lookup-method name="getOutDto" bean="personDto"/>
         <property name="translator" ref="soapPersonTranslator"/>
 	</bean>
 
-	<bean id="personWriteService" class="com.cdse.service.db.WriteServiceImpl">
+	<bean id="personWriteService" class="com.cdse.service.write.WriteServiceImpl">
 		<property name="writeDaoMap" ref="writeDaoMapTempl"/>
 		<lookup-method name="getDomObject" bean="person"/>
         <property name="translator" ref="personTranslator"/>

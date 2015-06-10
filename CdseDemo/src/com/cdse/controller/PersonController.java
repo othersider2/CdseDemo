@@ -22,8 +22,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cdse.dto.PersonDto;
 import com.cdse.service.CdseService;
-import com.cdse.service.ReadService;
-import com.cdse.service.WriteService;
+import com.cdse.service.read.ReadService;
+import com.cdse.service.write.WriteService;
 
 @Controller
 public class PersonController {
