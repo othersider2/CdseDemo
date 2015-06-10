@@ -54,7 +54,7 @@ public class ServiceFacade<TinDto extends Identifiable, TOutDto> implements Cdse
 		
 		Map<String, TOutDto> outDtoMap = new HashMap<String, TOutDto>();
 		try {
-			getReadService().execute("getUsingId", inInDto, outDtoMap);
+			getReadService().execute(inRequstMapping, inInDto, outDtoMap);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
