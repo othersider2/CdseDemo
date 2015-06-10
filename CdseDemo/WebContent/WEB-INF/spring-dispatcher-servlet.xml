@@ -99,7 +99,7 @@
 
 	 <bean name="/createPerson.html" class="com.cdse.controller.PersonController" />
 	 <bean name="/updatePerson.html" class="com.cdse.controller.PersonController" />
-	 <bean name="/getPersonUsingName.html" class="com.cdse.controller.PersonController" />
+	 <bean name="/getUsingId.html" class="com.cdse.controller.PersonController" />
     
 	<util:map id="readDaoMapTempl" map-class="java.util.HashMap"
   		key-type="java.lang.String" value-type="om.cdse.dao.db.DbReadDao" >

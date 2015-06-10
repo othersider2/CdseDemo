@@ -73,7 +73,7 @@ public class PersonController {
 		return model1;
 	}
 	
-	@RequestMapping(value="/getPersonUsingName.html", method = RequestMethod.POST)
+	@RequestMapping(value="/getUsingId.html", method = RequestMethod.POST)
 	public ModelAndView getPersonForm(@ModelAttribute("person") PersonDto personDto) {
 		ModelAndView model1 = null;
 		PersonDto outDto = personService.get("getUsingId", personDto);
