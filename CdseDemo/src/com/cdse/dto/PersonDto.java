@@ -11,7 +11,7 @@ import com.cdse.domain.CdseEntity;
 import com.cdse.domain.Person;
 import com.cdse.domain.Role;
 
-public class PersonDto implements CdseDto{
+public class PersonDto implements Identifiable{
 
 	private String personId;
 	
@@ -57,8 +57,8 @@ public class PersonDto implements CdseDto{
 		this.roleNames = roleNames;
 	}
 	@Override
-	public int getId() {
-		return Integer.parseInt(this.getPersonId());
+	public String getId() {
+		return this.getPersonId();
 	}
 	public String getPhoneNumber() {
 		return phoneNumber;

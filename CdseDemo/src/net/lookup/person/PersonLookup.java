@@ -28,14 +28,14 @@ public interface PersonLookup {
      * 
      * @param arg0
      * @return
-     *     returns net.lookup.person.PersonWS
+     *     returns net.lookup.person.PersonListContainer
      */
     @WebMethod
     @WebResult(targetNamespace = "")
     @RequestWrapper(localName = "getPersonWS", targetNamespace = "http://person.lookup.net/", className = "net.lookup.person.GetPersonWS")
     @ResponseWrapper(localName = "getPersonWSResponse", targetNamespace = "http://person.lookup.net/", className = "net.lookup.person.GetPersonWSResponse")
     @Action(input = "http://person.lookup.net/PersonLookup/getPersonWSRequest", output = "http://person.lookup.net/PersonLookup/getPersonWSResponse")
-    public PersonWS getPersonWS(
+    public PersonListContainer getPersonWS(
         @WebParam(name = "arg0", targetNamespace = "")
         String arg0);
 

@@ -29,7 +29,7 @@ public class PersonTranslator implements CdseTranslator<Person, PersonDto>{
 	public void translateDtoToEntity(Person inPerson, PersonDto inDto) {
 
 		if (inDto.getPersonId() != null) {
-			inPerson.setPersonId(inDto.getId());
+			inPerson.setPersonId(Integer.parseInt(inDto.getId()));
 		}
 		inPerson.setFirstName(inDto.getFirstName());
 		inPerson.setLastName(inDto.getLastName());

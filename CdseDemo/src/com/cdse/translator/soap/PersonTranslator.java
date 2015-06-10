@@ -6,6 +6,7 @@ import net.lookup.person.PersonLookup;
 import net.lookup.person.PersonLookup_Service;
 import net.lookup.person.PersonWS;
 
+import com.cdse.dao.soap.SoapPersonDto;
 import com.cdse.domain.Person;
 import com.cdse.domain.Role;
 import com.cdse.dto.PersonDto;
@@ -14,17 +15,17 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
-public class PersonTranslator implements CdseTranslator<PersonWS, PersonDto>{
+public class PersonTranslator implements CdseTranslator<SoapPersonDto, PersonDto>{
 
 	@Override
-	public void translateEntityToDto(PersonWS inPersonWs, PersonDto inDto) {
-		inDto.setPhoneNumber(inPersonWs.getPhoneNumber());
+	public void translateEntityToDto(SoapPersonDto inSoapPersonDto, PersonDto inDto) {
+		inDto.setPhoneNumber(inSoapPersonDto.getPhoneNumber());
 	}
 	
 	@Override
-	public void translateDtoToEntity(PersonWS inPersonWs, PersonDto inDto) {
+	public void translateDtoToEntity(SoapPersonDto inSoapPersonDto, PersonDto inDto) {
 
-		inPersonWs.setFirstName(inDto.getFirstName());
-		inPersonWs.setLastName(inDto.getLastName());
+		inSoapPersonDto.setFirstName(inDto.getFirstName());
+		inSoapPersonDto.setLastName(inDto.getLastName());
 	}
 }

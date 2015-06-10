@@ -51,6 +51,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link PersonListContainer }
+     * 
+     */
+    public PersonListContainer createPersonListContainer() {
+        return new PersonListContainer();
+    }
+
+    /**
      * Create an instance of {@link PersonWS }
      * 
      */

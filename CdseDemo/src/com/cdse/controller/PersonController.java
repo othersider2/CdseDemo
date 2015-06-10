@@ -2,7 +2,9 @@ package com.cdse.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -75,15 +77,17 @@ public class PersonController {
 	
 	@RequestMapping(value="/getPersonUsingName.html", method = RequestMethod.POST)
 	public ModelAndView getPersonForm(@ModelAttribute("person") PersonDto personDto) {
-		List<PersonDto> personList = new ArrayList<PersonDto>();
+		Map<String, PersonDto> personMap = new HashMap<String, PersonDto>();
 		ModelAndView model1 = null;
 		try {
-			personReadService.execute("getUsingId", personDto, personList);
+			personReadService.execute("getUsingId", personDto, personMap);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		model1 = new ModelAndView("DownloadSuccess");
-		model1.addObject("outPerson", personList.get(0));
+		List<PersonDto> list = new ArrayList<PersonDto>(personMap.values());
+		PersonDto outDto = list.get(0);
+		model1.addObject("outPerson", outDto);
 		
 		return model1;
 	}

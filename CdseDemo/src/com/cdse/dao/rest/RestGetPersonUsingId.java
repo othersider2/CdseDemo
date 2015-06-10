@@ -12,13 +12,13 @@ import org.springframework.stereotype.Repository;
 import com.cdse.dao.ReadDao;
 import com.cdse.domain.CdseEntity;
 import com.cdse.domain.Person;
-import com.cdse.dto.CdseDto;
+import com.cdse.dto.Identifiable;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 @Repository
-public class RestGetPersonUsingId<TResource, TDto extends CdseDto> implements ReadDao<TResource, TDto> {
+public class RestGetPersonUsingId<TResource, TDto extends Identifiable> implements ReadDao<TResource, TDto> {
 
 	@Autowired
     private SessionFactory sessionFactory;

@@ -6,9 +6,12 @@ import javax.jws.*;
 public class PersonLookup {
 
 	@WebMethod
-	public PersonWS getPersonWS(String inName) {
+	public PersonListContainer getPersonWS(String inId) {
 		PersonWS personWs= new PersonWS();
+		personWs.setId(inId);
 		personWs.setPhoneNumber("555-555-5555");
-		return personWs;
+		PersonListContainer outContainer = new PersonListContainer();
+		outContainer.getPersonList().add(personWs);
+		return outContainer;
 	}
 }

@@ -8,11 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cdse.dao.db.WriteDao;
 import com.cdse.domain.CdseEntity;
 import com.cdse.domain.EntityState;
-import com.cdse.dto.CdseDto;
+import com.cdse.dto.Identifiable;
 import com.cdse.service.WriteService;
 import com.cdse.translator.CdseTranslator;
 
-public abstract class WriteServiceImpl<TDom extends CdseEntity, TInDto extends CdseDto> implements WriteService<TInDto> {
+public abstract class WriteServiceImpl<TDom extends CdseEntity, TInDto extends Identifiable> implements WriteService<TInDto> {
 
 	private Map<String, WriteDao<TDom>> writeDaoMap;
 

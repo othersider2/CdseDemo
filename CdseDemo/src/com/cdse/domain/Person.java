@@ -27,9 +27,11 @@ import javax.persistence.JoinColumn;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.cdse.dto.Identifiable;
+
 @Entity
 @Table(name="PERSON")
-public class Person implements CdseEntity{
+public class Person implements CdseEntity, Identifiable {
 	
 	public Person() {
 		
@@ -139,5 +141,11 @@ public class Person implements CdseEntity{
 	@Override
 	public void setState(EntityState state) {
 		this.state = state;
+	}
+
+	@Override
+	public String getId() {
+		// TODO Auto-generated method stub
+		return personId.toString();
 	}
 }

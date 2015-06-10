@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="return" type="{http://person.lookup.net/}personWS" minOccurs="0"/>
+ *         &lt;element name="return" type="{http://person.lookup.net/}personListContainer" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -33,17 +33,17 @@ import javax.xml.bind.annotation.XmlType;
 public class GetPersonWSResponse {
 
     @XmlElement(name = "return")
-    protected PersonWS _return;
+    protected PersonListContainer _return;
 
     /**
      * Gets the value of the return property.
      * 
      * @return
      *     possible object is
-     *     {@link PersonWS }
+     *     {@link PersonListContainer }
      *     
      */
-    public PersonWS getReturn() {
+    public PersonListContainer getReturn() {
         return _return;
     }
 
@@ -52,10 +52,10 @@ public class GetPersonWSResponse {
      * 
      * @param value
      *     allowed object is
-     *     {@link PersonWS }
+     *     {@link PersonListContainer }
      *     
      */
-    public void setReturn(PersonWS value) {
+    public void setReturn(PersonListContainer value) {
         this._return = value;
     }
 
