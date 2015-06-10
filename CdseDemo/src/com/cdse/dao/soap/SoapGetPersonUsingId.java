@@ -24,22 +24,21 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 @Repository
-public class SoapGetPersonUsingId implements ReadDao<SoapPersonDto, PersonDto> {
+public class SoapGetPersonUsingId implements ReadDao<PersonWsAdapter, PersonDto> {
 
 	@Autowired
     private SessionFactory sessionFactory;
 
 	@Override
-	public List<SoapPersonDto> execute(SoapPersonDto inPrototype, PersonDto inDto) {
+	public List<PersonWsAdapter> execute(PersonWsAdapter inPrototype, PersonDto inDto) {
 		PersonLookup_Service personLookupService = new PersonLookup_Service();
 		PersonLookup personLookup = personLookupService.getPersonLookupPort();
 		PersonListContainer personListContainer = personLookup.getPersonWS(inDto.getId());
 		
-		List<SoapPersonDto> outList = new ArrayList<SoapPersonDto>();
+		List<PersonWsAdapter> outList = new ArrayList<PersonWsAdapter>();
 		for (PersonWS personWs : personListContainer.getPersonList()) {
-			SoapPersonDto soapPersonDto = new SoapPersonDto();
-			soapPersonDto.setPersonId(personWs.getId());
-			soapPersonDto.setPhoneNumber(personWs.getPhoneNumber());
+			PersonWsAdapter soapPersonDto = new PersonWsAdapter();
+			soapPersonDto.setPersonWs(personWs);
 			outList.add(soapPersonDto);
 		}
 		

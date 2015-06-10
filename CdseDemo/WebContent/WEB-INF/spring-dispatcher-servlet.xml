@@ -75,7 +75,7 @@
 
 	<bean id="soapPersonReadService" class="com.cdse.service.ReadServiceImpl">
 		<property name="readDaoMap" ref="soapReadDaoMapTempl"/>
-		<lookup-method name="getDomObject" bean="soapPersonDto"/>
+		<lookup-method name="getDomObject" bean="personWsAdapter"/>
 		<lookup-method name="getOutDto" bean="personDto"/>
         <property name="translator" ref="soapPersonTranslator"/>
 	</bean>
@@ -89,9 +89,8 @@
 	<bean id="soapPersonTranslator" class="com.cdse.translator.soap.PersonTranslator"/>
 	<bean id="personTranslator" class="com.cdse.translator.db.PersonTranslator"/>
 	<bean id="person" class="com.cdse.domain.Person" scope="prototype"/>
-	<bean id="personWS" class="net.lookup.person.PersonWS" scope="prototype"/>
+	<bean id="personWsAdapter" class="com.cdse.dao.soap.PersonWsAdapter" scope="prototype"/>
 	<bean id="personDto" class="com.cdse.dto.PersonDto" scope="prototype"/>
-	<bean id="soapPersonDto" class="com.cdse.dao.soap.SoapPersonDto" scope="prototype"/>
 
 	 <bean name="/createPerson.html" class="com.cdse.controller.PersonController" />
 	 <bean name="/updatePerson.html" class="com.cdse.controller.PersonController" />
