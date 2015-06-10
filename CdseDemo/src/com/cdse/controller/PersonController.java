@@ -21,6 +21,7 @@ import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cdse.dto.PersonDto;
+import com.cdse.service.CdseService;
 import com.cdse.service.ReadService;
 import com.cdse.service.WriteService;
 
@@ -28,10 +29,7 @@ import com.cdse.service.WriteService;
 public class PersonController {
 	
 	@Autowired
-	WriteService<PersonDto> personWriteService;
-
-	@Autowired
-	ReadService<PersonDto, PersonDto> personReadService;
+	CdseService<PersonDto, PersonDto> personService;
 
 	@ModelAttribute
     public void addingCommonObjects(Model model1) {
@@ -51,7 +49,7 @@ public class PersonController {
 	
 		ModelAndView model1 = null;
 		try {
-			personWriteService.execute("create", personDto);
+			personService.write("create", personDto);
 			model1 = new ModelAndView("UploadSuccess");
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -66,7 +64,7 @@ public class PersonController {
 		ModelAndView model1 = null;
 		try {
 			personDto.setPersonId("97");
-			personWriteService.execute("update", personDto);
+			personService.write("update", personDto);
 			model1 = new ModelAndView("UploadSuccess");
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -77,16 +75,9 @@ public class PersonController {
 	
 	@RequestMapping(value="/getPersonUsingName.html", method = RequestMethod.POST)
 	public ModelAndView getPersonForm(@ModelAttribute("person") PersonDto personDto) {
-		Map<String, PersonDto> personMap = new HashMap<String, PersonDto>();
 		ModelAndView model1 = null;
-		try {
-			personReadService.execute("getUsingId", personDto, personMap);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		PersonDto outDto = personService.get("getUsingId", personDto);
 		model1 = new ModelAndView("DownloadSuccess");
-		List<PersonDto> list = new ArrayList<PersonDto>(personMap.values());
-		PersonDto outDto = list.get(0);
 		model1.addObject("outPerson", outDto);
 		
 		return model1;

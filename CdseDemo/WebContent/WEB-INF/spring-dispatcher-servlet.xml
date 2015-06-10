@@ -66,6 +66,11 @@
 	</bean>
 
 	
+	<bean id="personService" class="com.cdse.service.ServiceFacade">
+		<property name="readService" ref="personReadService"/>
+        <property name="writeService" ref="personWriteService"/>
+	</bean>
+
 	<bean id="dbPersonReadService" class="com.cdse.service.ReadServiceImpl">
 		<property name="readDaoMap" ref="readDaoMapTempl"/>
 		<lookup-method name="getDomObject" bean="person"/>
