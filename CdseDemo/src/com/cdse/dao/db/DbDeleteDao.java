@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.cdse.dao.WriteDao;
 import com.cdse.domain.CdseEntity;
 
 public class DbDeleteDao<TDom extends CdseEntity> implements WriteDao<TDom>{

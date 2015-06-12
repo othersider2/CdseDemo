@@ -1,9 +1,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context" 
- 	   xmlns:util="http://www.springframework.org/schema/util"
-       xmlns:tx="http://www.springframework.org/schema/tx"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/util
 		http://www.springframework.org/schema/util/spring-util-3.0.xsd
@@ -12,140 +10,164 @@
         http://www.springframework.org/schema/tx 	
         http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <context:annotation-config/>
-    <context:component-scan base-package="com.cdse.demo"/>
+	<context:annotation-config />
+	<context:component-scan base-package="com.cdse.demo" />
 
-    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
-        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-        <property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl"/>
-        <property name="username" value="cdsedemo"/>
-        <property name="password" value="cdsedemo"/>
-<!--         <property name="validationQuery" value="SELECT * FROM Person"/> -->
-    </bean>
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl" />
+		<property name="username" value="cdsedemo" />
+		<property name="password" value="cdsedemo" />
+		<!-- <property name="validationQuery" value="SELECT * FROM Person"/> -->
+	</bean>
 
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="packagesToScan" value="com.cdse.domain"/>
-        <property name="hibernateProperties">
-            <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>
-                <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.hbm2ddl.auto">update</prop>
-            </props>
-        </property>
-    </bean>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="com.cdse.domain" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+	</bean>
 
-    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
 
-    <tx:annotation-driven transaction-manager="transactionManager"/>
-     
- 	<bean id="HandlerMapping"  class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
- 	
- 	<bean id="multipartResolver"
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<bean id="HandlerMapping"
+		class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" />
+
+	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
- 
-	 <bean id="viewResolver"
-	    	class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
-	        <property name="prefix">
-	            <value>/WEB-INF/</value>
-	        </property>
-	        <property name="suffix">
-	            <value>.jsp</value>
-	        </property>
-	 </bean>
- 
+
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
+			<value>/WEB-INF/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+
 	<bean id="personReadService" class="com.cdse.service.read.CompositeReadService">
 		<property name="readServiceList">
 			<list>
 				<ref bean="dbPersonReadService" />
 				<ref bean="soapPersonReadService" />
+				<ref bean="restPersonReadService" />
 			</list>
-		</property>	
+		</property>
 	</bean>
 
-	
+
 	<bean id="personService" class="com.cdse.service.ServiceFacade">
-		<property name="readService" ref="personReadService"/>
-        <property name="writeService" ref="personWriteService"/>
+		<property name="readService" ref="personReadService" />
+		<property name="writeService" ref="personWriteService" />
 	</bean>
 
 	<bean id="dbPersonReadService" class="com.cdse.service.read.ReadServiceImpl">
-		<property name="readDaoMap" ref="readDaoMapTempl"/>
-		<lookup-method name="getDomObject" bean="person"/>
-		<lookup-method name="getOutDto" bean="personDto"/>
-        <property name="translator" ref="personTranslator"/>
+		<property name="readDaoMap" ref="readDaoMapTempl" />
+		<lookup-method name="getDomObject" bean="person" />
+		<lookup-method name="getOutDto" bean="personDto" />
+		<property name="translator" ref="personTranslator" />
+	</bean>
+
+	<bean id="restPersonReadService" class="com.cdse.service.read.ReadServiceImpl">
+		<property name="readDaoMap" ref="restReadDaoMapTempl" />
+		<lookup-method name="getDomObject" bean="personRestAdapter" />
+		<lookup-method name="getOutDto" bean="personDto" />
+		<property name="translator" ref="restPersonTranslator" />
 	</bean>
 
 	<bean id="soapPersonReadService" class="com.cdse.service.read.ReadServiceImpl">
-		<property name="readDaoMap" ref="soapReadDaoMapTempl"/>
-		<lookup-method name="getDomObject" bean="personWsAdapter"/>
-		<lookup-method name="getOutDto" bean="personDto"/>
-        <property name="translator" ref="soapPersonTranslator"/>
+		<property name="readDaoMap" ref="soapReadDaoMapTempl" />
+		<lookup-method name="getDomObject" bean="personWsAdapter" />
+		<lookup-method name="getOutDto" bean="personDto" />
+		<property name="translator" ref="soapPersonTranslator" />
 	</bean>
 
 	<bean id="personWriteService" class="com.cdse.service.write.WriteServiceImpl">
-		<property name="writeDaoMap" ref="writeDaoMapTempl"/>
-		<lookup-method name="getDomObject" bean="person"/>
-        <property name="translator" ref="personTranslator"/>
+		<property name="writeDaoMap" ref="writeDaoMapTempl" />
+		<lookup-method name="getDomObject" bean="person" />
+		<property name="translator" ref="personTranslator" />
 	</bean>
 
-	<bean id="soapPersonTranslator" class="com.cdse.translator.soap.PersonTranslator"/>
-	<bean id="personTranslator" class="com.cdse.translator.db.PersonTranslator"/>
-	<bean id="person" class="com.cdse.domain.Person" scope="prototype"/>
-	<bean id="personWsAdapter" class="com.cdse.dao.soap.PersonWsAdapter" scope="prototype"/>
-	<bean id="personDto" class="com.cdse.dto.PersonDto" scope="prototype"/>
+	<bean id="soapPersonTranslator" class="com.cdse.translator.soap.PersonTranslator" />
+	<bean id="restPersonTranslator" class="com.cdse.translator.rest.PersonTranslator" />
+	<bean id="personTranslator" class="com.cdse.translator.db.PersonTranslator" />
+	<bean id="person" class="com.cdse.domain.Person" scope="prototype" />
+	<bean id="personWsAdapter" class="com.cdse.dao.soap.PersonWsAdapter" scope="prototype" />
+	<bean id="personRestAdapter" class="com.cdse.dao.rest.PersonRestAdapter" scope="prototype" />
+	<bean id="personDto" class="com.cdse.dto.PersonDto" scope="prototype" />
 
-	 <bean name="/createPerson.html" class="com.cdse.controller.PersonController" />
-	 <bean name="/updatePerson.html" class="com.cdse.controller.PersonController" />
-	 <bean name="/getUsingId.html" class="com.cdse.controller.PersonController" />
-    
+	<bean name="/createPerson.html" class="com.cdse.controller.PersonController" />
+	<bean name="/updatePerson.html" class="com.cdse.controller.PersonController" />
+	<bean name="/getUsingId.html" class="com.cdse.controller.PersonController" />
+
 	<util:map id="readDaoMapTempl" map-class="java.util.HashMap"
-  		key-type="java.lang.String" value-type="om.cdse.dao.db.DbReadDao" >
-		    <entry>
-		        <key>
-		            <value>getPersonUsingName</value>
-		        </key>
-		        <ref bean="getPersonUsingNameQueryImpl"/>
-		    </entry>
-		    <entry>
-		        <key>
-		            <value>getUsingId</value>
-		        </key>
-		        <ref bean="getUsingId"/>
-		    </entry>
+		key-type="java.lang.String" value-type="om.cdse.dao.db.DbReadDao">
+		<entry>
+			<key>
+				<value>getPersonUsingName</value>
+			</key>
+			<ref bean="getPersonUsingNameQueryImpl" />
+		</entry>
+		<entry>
+			<key>
+				<value>getUsingId</value>
+			</key>
+			<ref bean="getUsingId" />
+		</entry>
 	</util:map>
 
 	<util:map id="soapReadDaoMapTempl" map-class="java.util.HashMap"
-  		key-type="java.lang.String" value-type="om.cdse.dao.ReadDao" >
-		    <entry>
-		        <key>
-		            <value>getUsingId</value>
-		        </key>
-		        <ref bean="soapGetUsingId"/>
-		    </entry>
+		key-type="java.lang.String" value-type="om.cdse.dao.ReadDao">
+		<entry>
+			<key>
+				<value>getUsingId</value>
+			</key>
+			<ref bean="soapGetUsingId" />
+		</entry>
 	</util:map>
 
-	<bean id="soapGetUsingId" class="com.cdse.dao.soap.SoapGetPersonUsingId"/>
-	<bean id="getUsingId" class="com.cdse.dao.db.GetUsingId"/>
-	<bean id="getPersonUsingNameQueryImpl" class="com.cdse.dao.db.GetPersonUsingNameQueryImpl"/>
-	
+	<util:map id="restReadDaoMapTempl" map-class="java.util.HashMap"
+		key-type="java.lang.String" value-type="om.cdse.dao.ReadDao">
+		<entry>
+			<key>
+				<value>getUsingId</value>
+			</key>
+			<ref bean="restGetUsingId" />
+		</entry>
+	</util:map>
+
+	<bean id="soapGetUsingId" class="com.cdse.dao.soap.SoapGetPersonUsingId" />
+	<bean id="restGetUsingId" class="com.cdse.dao.rest.RestGetPersonUsingId" />
+	<bean id="getUsingId" class="com.cdse.dao.db.GetUsingId" />
+	<bean id="getPersonUsingNameQueryImpl" class="com.cdse.dao.db.GetPersonUsingNameQueryImpl" />
+
 	<util:map id="writeDaoMapTempl" map-class="java.util.HashMap"
-  		key-type="java.lang.String" value-type="om.cdse.dao.db.WriteDao" >
-		    <entry>
-		        <key>
-		            <value>create</value>
-		        </key>
-		        <ref bean="saveDao"/>
-		    </entry>
-		    <entry>
-		        <key>
-		            <value>update</value>
-		        </key>
-		        <ref bean="saveDao"/>
-		    </entry>
+		key-type="java.lang.String" value-type="om.cdse.dao.db.WriteDao">
+		<entry>
+			<key>
+				<value>create</value>
+			</key>
+			<ref bean="saveDao" />
+		</entry>
+		<entry>
+			<key>
+				<value>update</value>
+			</key>
+			<ref bean="saveDao" />
+		</entry>
 	</util:map>
 
-	<bean id="saveDao" class="com.cdse.dao.db.DbSaveDao"/>
+	<bean id="saveDao" class="com.cdse.dao.db.DbSaveDao" />
 </beans>

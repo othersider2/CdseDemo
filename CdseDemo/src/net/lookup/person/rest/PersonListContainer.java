@@ -1,9 +1,8 @@
 
-package net.lookup.person;
+package net.lookup.person.rest;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -16,15 +15,15 @@ import javax.xml.bind.annotation.XmlType;
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="personListContainer">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="personList" type="{http://person.lookup.net/}personWS" maxOccurs="unbounded" minOccurs="0"/>
- *       &lt;/sequence>
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name="personListContainer"&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element name="personList" type="{}personRest" maxOccurs="unbounded" minOccurs="0"/&gt;
+ *       &lt;/sequence&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
  * 
@@ -36,7 +35,7 @@ import javax.xml.bind.annotation.XmlType;
 public class PersonListContainer {
 
     @XmlElement(nillable = true)
-    protected List<PersonWS> personList;
+    protected List<PersonRest> personList;
 
     /**
      * Gets the value of the personList property.
@@ -56,13 +55,13 @@ public class PersonListContainer {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link PersonWS }
+     * {@link PersonRest }
      * 
      * 
      */
-    public List<PersonWS> getPersonList() {
+    public List<PersonRest> getPersonList() {
         if (personList == null) {
-            personList = new ArrayList<PersonWS>();
+            personList = new ArrayList<PersonRest>();
         }
         return this.personList;
     }

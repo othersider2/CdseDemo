@@ -1,10 +1,6 @@
 package com.cdse.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -22,8 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cdse.dto.PersonDto;
 import com.cdse.service.CdseService;
-import com.cdse.service.read.ReadService;
-import com.cdse.service.write.WriteService;
 
 @Controller
 public class PersonController {

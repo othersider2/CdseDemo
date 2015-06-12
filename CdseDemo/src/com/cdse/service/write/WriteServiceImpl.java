@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import com.cdse.dao.db.WriteDao;
+import com.cdse.dao.WriteDao;
 import com.cdse.domain.CdseEntity;
 import com.cdse.domain.EntityState;
 import com.cdse.dto.Identifiable;

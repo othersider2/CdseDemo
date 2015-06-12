@@ -3,13 +3,7 @@ package com.cdse.dto;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Transient;
-
 import org.springframework.web.multipart.MultipartFile;
-
-import com.cdse.domain.CdseEntity;
-import com.cdse.domain.Person;
-import com.cdse.domain.Role;
 
 public class PersonDto implements Identifiable{
 

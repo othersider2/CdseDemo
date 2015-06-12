@@ -1,41 +1,42 @@
 package net.rest.person;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import java.util.HashSet;
+import java.util.Set;
 
-@Path("/person")
-public class PersonRest {
+import javax.xml.bind.annotation.XmlRootElement;
+
+public class PersonRest{
+
+	private String personId;
 	
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public PersonJSon getJsonPersonInfo() {
-		
-		PersonJSon personJSon = new PersonJSon();
-		personJSon.setPhoneNumber("555-555-5555");
-		
-		return personJSon;
+	private String firstName;
+	
+	private String lastName;
+	
+	private String phoneNumber;
+
+	public String getPersonId() {
+		return personId;
 	}
-	
-	@GET
-	@Produces(MediaType.TEXT_HTML)
-	public String getHtmlPersonInfo() {
-		return "<html> " + "<title>" + "Phone Number" + "</title>" 
-		+ "<body><h1>" + "PHONE_NUMBER - 555-555-5555" + "</body></h1>" + "</html>";
+	public void setPersonId(String personId) {
+		this.personId = personId;
 	}
-	
-	@GET
-	@Produces(MediaType.TEXT_PLAIN)
-	public String getXmlPersonInfo() {
-		return "PHONE_NUMBER - 555-555-5555";
+	public String getFirstName() {
+		return firstName;
 	}
-	
-	@PUT
-	@Path("{personPhoneNumber}")
-	public String updatePersonInfo(@PathParam("personPhoneNumber") String inPhoneNumber) {
-		return "Done successfully";
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 }

@@ -1,25 +1,5 @@
 package com.cdse.service.test;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-
-import java.io.IOException;
-
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.mockito.runners.MockitoJUnitRunner;
-
-import com.cdse.controller.PersonController;
-import com.cdse.domain.CdseEntity;
-import com.cdse.domain.Person;
-import com.cdse.domain.EntityState;
 
 //@RunWith(MockitoJUnitRunner.class)
 public class CdseServiceImplTest {

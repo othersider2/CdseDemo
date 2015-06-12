@@ -3,8 +3,6 @@ package com.cdse.dao.soap;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.ws.rs.core.MediaType;
-
 import net.lookup.person.PersonListContainer;
 import net.lookup.person.PersonLookup;
 import net.lookup.person.PersonLookup_Service;
@@ -15,13 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.cdse.dao.ReadDao;
-import com.cdse.domain.CdseEntity;
-import com.cdse.domain.Person;
-import com.cdse.dto.Identifiable;
 import com.cdse.dto.PersonDto;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
 
 @Repository
 public class SoapGetPersonUsingId implements ReadDao<PersonWsAdapter, PersonDto> {

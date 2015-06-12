@@ -1,8 +1,8 @@
 <html>
 <body>
 	<h1>${headerMessage}</h1>
- 
-	<h3>Photo ${person.photoPart} has been uploaded for </h3>
+
+	<h3>Photo ${person.photoPart} has been uploaded for</h3>
 
 	<table>
 		<tr>
