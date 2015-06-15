@@ -57,8 +57,21 @@ public class PersonController {
 	
 		ModelAndView model1 = null;
 		try {
-			personDto.setPersonId("97");
 			personService.update(personDto);
+			model1 = new ModelAndView("UploadSuccess");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return model1;
+	}
+	
+	@RequestMapping(value="/deletePerson.html", method = RequestMethod.POST)
+	public ModelAndView deletePersonForm(@ModelAttribute("person") PersonDto personDto) {
+	
+		ModelAndView model1 = null;
+		try {
+			personService.delete(personDto);
 			model1 = new ModelAndView("UploadSuccess");
 		} catch (IOException e) {
 			e.printStackTrace();
