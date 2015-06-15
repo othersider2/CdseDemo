@@ -43,7 +43,7 @@ public class PersonController {
 	
 		ModelAndView model1 = null;
 		try {
-			personService.write("create", personDto);
+			personService.insert(personDto);
 			model1 = new ModelAndView("UploadSuccess");
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -58,7 +58,7 @@ public class PersonController {
 		ModelAndView model1 = null;
 		try {
 			personDto.setPersonId("97");
-			personService.write("update", personDto);
+			personService.update(personDto);
 			model1 = new ModelAndView("UploadSuccess");
 		} catch (IOException e) {
 			e.printStackTrace();

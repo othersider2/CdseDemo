@@ -25,8 +25,24 @@ public abstract class ServiceFacade<TinDto extends Identifiable, TOutDto> implem
 	 * @see com.cdse.service.CdseService#write(java.lang.String, TinDto)
 	 */
 	@Override
-	public void write(String inRequstMapping, TinDto inInDto) throws IOException {
-		getWriteService().execute(inRequstMapping, inInDto);
+	public void insert(TinDto inInDto) throws IOException {
+		getWriteService().execute("insert", inInDto);
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.cdse.service.CdseService#write(java.lang.String, TinDto)
+	 */
+	@Override
+	public void update(TinDto inInDto) throws IOException {
+		getWriteService().execute("update", inInDto);
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.cdse.service.CdseService#write(java.lang.String, TinDto)
+	 */
+	@Override
+	public void delete(TinDto inInDto) throws IOException {
+		getWriteService().execute("delete", inInDto);
 	}
 	
 	/* (non-Javadoc)

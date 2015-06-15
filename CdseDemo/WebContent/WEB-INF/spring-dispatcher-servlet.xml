@@ -184,17 +184,24 @@
 		key-type="java.lang.String" value-type="om.cdse.dao.db.WriteDao">
 		<entry>
 			<key>
-				<value>create</value>
+				<value>insert</value>
 			</key>
-			<ref bean="saveDao" />
+			<ref bean="dbSaveDao" />
 		</entry>
 		<entry>
 			<key>
 				<value>update</value>
 			</key>
-			<ref bean="saveDao" />
+			<ref bean="dbSaveDao" />
+		</entry>
+		<entry>
+			<key>
+				<value>delete</value>
+			</key>
+			<ref bean="dbDeleteDao" />
 		</entry>
 	</util:map>
 
-	<bean id="saveDao" class="com.cdse.dao.db.DbSaveDao" />
+	<bean id="dbSaveDao" class="com.cdse.dao.db.DbSaveDao" />
+	<bean id="dbDeleteDao" class="com.cdse.dao.db.DbDeleteDao" />
 </beans>
