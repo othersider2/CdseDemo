@@ -73,29 +73,44 @@
 		<property name="writeService" ref="personWriteService" />
 	</bean>
 
-	<bean id="dbPersonReadService" class="com.cdse.service.read.ReadServiceImpl">
+	<bean id="dbPersonDao" class="com.cdse.dao.DaoFacade">
 		<property name="readDaoMap" ref="readDaoMapTempl" />
+		<property name="writeDaoMap" ref="writeDaoMapTempl" />
+	</bean>
+
+	<bean id="restPersonDao" class="com.cdse.dao.DaoFacade">
+		<property name="readDaoMap" ref="restReadDaoMapTempl" />
+		<property name="writeDaoMap" ref="writeDaoMapTempl" />
+	</bean>
+
+	<bean id="soapPersonDao" class="com.cdse.dao.DaoFacade">
+		<property name="readDaoMap" ref="soapReadDaoMapTempl" />
+		<property name="writeDaoMap" ref="writeDaoMapTempl" />
+	</bean>
+
+	<bean id="dbPersonReadService" class="com.cdse.service.read.ReadServiceImpl">
+		<property name="dao" ref="dbPersonDao" />
 		<lookup-method name="getDomObject" bean="person" />
 		<lookup-method name="getOutDto" bean="personDto" />
 		<property name="translator" ref="personTranslator" />
 	</bean>
 
 	<bean id="restPersonReadService" class="com.cdse.service.read.ReadServiceImpl">
-		<property name="readDaoMap" ref="restReadDaoMapTempl" />
+		<property name="dao" ref="restPersonDao" />
 		<lookup-method name="getDomObject" bean="personRestAdapter" />
 		<lookup-method name="getOutDto" bean="personDto" />
 		<property name="translator" ref="restPersonTranslator" />
 	</bean>
 
 	<bean id="soapPersonReadService" class="com.cdse.service.read.ReadServiceImpl">
-		<property name="readDaoMap" ref="soapReadDaoMapTempl" />
+		<property name="dao" ref="soapPersonDao" />
 		<lookup-method name="getDomObject" bean="personWsAdapter" />
 		<lookup-method name="getOutDto" bean="personDto" />
 		<property name="translator" ref="soapPersonTranslator" />
 	</bean>
 
 	<bean id="personWriteService" class="com.cdse.service.write.WriteServiceImpl">
-		<property name="writeDaoMap" ref="writeDaoMapTempl" />
+		<property name="dao" ref="dbPersonDao" />
 		<lookup-method name="getDomObject" bean="person" />
 		<property name="translator" ref="personTranslator" />
 	</bean>

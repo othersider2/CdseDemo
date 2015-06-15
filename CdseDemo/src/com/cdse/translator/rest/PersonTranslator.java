@@ -9,12 +9,12 @@ public class PersonTranslator implements CdseTranslator<PersonRestAdapter, Perso
 
 	@Override
 	public void translateEntityToDto(PersonRestAdapter inPerson, PersonDto inDto) {
-		inDto.setPhoneNumber(inDto.getPhoneNumber());
+		inDto.setPhoneNumber(inPerson.getPhoneNumber());
 	 
 	}
 	
 	@Override
 	public void translateDtoToEntity(PersonRestAdapter inPerson, PersonDto inDto) {
-
+		
 	}
 }

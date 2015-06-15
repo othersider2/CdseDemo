@@ -6,17 +6,25 @@ import java.util.Map;
 
 import com.cdse.dto.Identifiable;
 
-public class DaoFacade<TResource, TInDto extends Identifiable> {
+public class DaoFacade<TResource, TInDto extends Identifiable> implements CdseDao<TResource, TInDto> {
 
 	private Map<String, WriteDao<TResource>> writeDaoMap;
 
 	private Map<String, ReadDao<TResource, TInDto>> readDaoMap;
 
+	/* (non-Javadoc)
+	 * @see com.cdse.dao.CdseDao#write(java.lang.String, TResource)
+	 */
+	@Override
 	public void write(String inRequestMapping, TResource inResource) throws IOException {
 		WriteDao<TResource> writeDao = getWriteDaoMap().get(inRequestMapping);
 		writeDao.execute(inResource);
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.cdse.dao.CdseDao#get(java.lang.String, TResource, TInDto)
+	 */
+	@Override
 	public TResource get(String inRequestMapping, TResource inPrototype, TInDto inInDto) throws IOException {
 		
 		TResource outResource = null;
@@ -30,6 +38,10 @@ public class DaoFacade<TResource, TInDto extends Identifiable> {
 		return outResource;
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.cdse.dao.CdseDao#getList(java.lang.String, TResource, TInDto)
+	 */
+	@Override
 	public List<TResource> getList(String inRequestMapping, TResource inPrototype, TInDto inInDto) throws IOException {
 		
 		ReadDao<TResource, TInDto> readDao = getReadDaoMap().get(inRequestMapping);

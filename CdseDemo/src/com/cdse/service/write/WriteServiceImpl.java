@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cdse.dao.CdseDao;
 import com.cdse.dao.WriteDao;
 import com.cdse.domain.CdseEntity;
 import com.cdse.domain.EntityState;
@@ -13,7 +14,7 @@ import com.cdse.translator.CdseTranslator;
 
 public abstract class WriteServiceImpl<TDom extends CdseEntity, TInDto extends Identifiable> implements WriteService<TInDto> {
 
-	private Map<String, WriteDao<TDom>> writeDaoMap;
+	private CdseDao<TDom, Identifiable> dao;
 
 	private CdseTranslator<TDom, TInDto> translator;
 	
@@ -34,8 +35,7 @@ public abstract class WriteServiceImpl<TDom extends CdseEntity, TInDto extends I
 		// let the domain object(s) do the business logic without persistence
 		domainObject.populate();
 		
-		WriteDao<TDom> writeDao = getWriteDaoMap().get(inRequestMapping);
-		writeDao.execute(domainObject);
+		dao.write(inRequestMapping, domainObject);
 		
 	}
 
@@ -47,12 +47,11 @@ public abstract class WriteServiceImpl<TDom extends CdseEntity, TInDto extends I
 		this.translator = translator;
 	}
 
-	public Map<String, WriteDao<TDom>> getWriteDaoMap() {
-		return writeDaoMap;
+	public CdseDao<TDom, Identifiable> getDao() {
+		return dao;
 	}
 
-	public void setWriteDaoMap(Map<String, WriteDao<TDom>> writeDaoMap) {
-		this.writeDaoMap = writeDaoMap;
+	public void setDao(CdseDao<TDom, Identifiable> dao) {
+		this.dao = dao;
 	}
-
 }

@@ -6,13 +6,14 @@ import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.cdse.dao.CdseDao;
 import com.cdse.dao.ReadDao;
 import com.cdse.dto.Identifiable;
 import com.cdse.translator.CdseTranslator;
 
 public abstract class ReadServiceImpl<TSubject extends Identifiable, TInDto extends Identifiable, TOutDto> implements ReadService<TInDto, TOutDto> {
 
-	private Map<String, ReadDao<TSubject, TInDto>> readDaoMap;
+	private CdseDao<TSubject, Identifiable> dao;
 
 	private CdseTranslator<TSubject, TOutDto> translator;
 	
@@ -23,8 +24,7 @@ public abstract class ReadServiceImpl<TSubject extends Identifiable, TInDto exte
 	@Override
 	@Transactional
 	public void execute(String inRequestMapping, TInDto inDto, Map<String, TOutDto> inOutDtoMap) throws IOException {
-		ReadDao<TSubject, TInDto> readDao = getReadDaoMap().get(inRequestMapping);
-		List<TSubject> subjectList = readDao.execute(getDomObject(), inDto);
+		List<TSubject> subjectList = dao.getList(inRequestMapping, getDomObject(), inDto);
 		
 		for (TSubject subject : subjectList) {
 			TOutDto outDto = null;
@@ -46,12 +46,12 @@ public abstract class ReadServiceImpl<TSubject extends Identifiable, TInDto exte
 		this.translator = translator;
 	}
 
-	public Map<String, ReadDao<TSubject, TInDto>> getReadDaoMap() {
-		return readDaoMap;
+	public CdseDao<TSubject, Identifiable> getDao() {
+		return dao;
 	}
 
-	public void setReadDaoMap(Map<String, ReadDao<TSubject, TInDto>> readDaoMap) {
-		this.readDaoMap = readDaoMap;
+	public void setDao(CdseDao<TSubject, Identifiable> dao) {
+		this.dao = dao;
 	}
 
 }
