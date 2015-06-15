@@ -68,7 +68,7 @@ public class PersonController {
 	}
 	
 	@RequestMapping(value="/getUsingId.html", method = RequestMethod.POST)
-	public ModelAndView getPersonForm(@ModelAttribute("person") PersonDto personDto) {
+	public ModelAndView getPersonForm(@ModelAttribute("person") PersonDto personDto) throws IOException {
 		ModelAndView model1 = null;
 		PersonDto outDto = personService.get("getUsingId", personDto);
 		model1 = new ModelAndView("DownloadSuccess");
