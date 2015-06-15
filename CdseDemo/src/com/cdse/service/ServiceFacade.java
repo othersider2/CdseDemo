@@ -33,17 +33,10 @@ public abstract class ServiceFacade<TinDto extends Identifiable, TOutDto> implem
 	 * @see com.cdse.service.CdseService#get(java.lang.String, TinDto)
 	 */
 	@Override
-	public TOutDto get(String inRequstMapping, TinDto inInDto) {
+	public TOutDto get(String inRequstMapping, TinDto inInDto) throws IOException {
 		
 		TOutDto outDto = getOutDto();
-
-		try {
-			getReadRecordService().execute(inRequstMapping, inInDto, outDto);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+		getReadRecordService().execute(inRequstMapping, inInDto, outDto);		
 		return outDto;
 	}
 	
@@ -51,15 +44,10 @@ public abstract class ServiceFacade<TinDto extends Identifiable, TOutDto> implem
 	 * @see com.cdse.service.CdseService#getList(java.lang.String, TinDto)
 	 */
 	@Override
-	public List<TOutDto> getList(String inRequstMapping, TinDto inInDto) {
+	public List<TOutDto> getList(String inRequstMapping, TinDto inInDto) throws IOException {
 		
 		Map<String, TOutDto> outDtoMap = new HashMap<String, TOutDto>();
-		try {
-			getReadListService().execute(inRequstMapping, inInDto, outDtoMap);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
+		getReadListService().execute(inRequstMapping, inInDto, outDtoMap);
 		return new ArrayList<TOutDto>(outDtoMap.values());
 	}
 

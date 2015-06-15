@@ -10,8 +10,8 @@ public interface CdseService<TinDto extends Identifiable, TOutDto> {
 	public abstract void write(String inRequstMapping, TinDto inInDto)
 			throws IOException;
 
-	public abstract TOutDto get(String inRequstMapping, TinDto inInDto);
+	public abstract TOutDto get(String inRequstMapping, TinDto inInDto) throws IOException;
 
-	public abstract List<TOutDto> getList(String inRequstMapping, TinDto inInDto);
+	public abstract List<TOutDto> getList(String inRequstMapping, TinDto inInDto) throws IOException;
 
 }
