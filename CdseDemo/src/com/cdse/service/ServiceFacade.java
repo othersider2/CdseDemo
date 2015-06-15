@@ -49,8 +49,7 @@ public abstract class ServiceFacade<TinDto extends Identifiable, TOutDto> implem
 	 * @see com.cdse.service.CdseService#get(java.lang.String, TinDto)
 	 */
 	@Override
-	public TOutDto get(String inRequstMapping, TinDto inInDto) throws IOException {
-		
+	public TOutDto get(String inRequstMapping, TinDto inInDto) throws IOException {		
 		TOutDto outDto = getOutDto();
 		getReadRecordService().execute(inRequstMapping, inInDto, outDto);		
 		return outDto;

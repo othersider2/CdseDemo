@@ -24,6 +24,33 @@ public class DaoFacade<TResource, TInDto extends Identifiable> implements CdseDa
 	}
 	
 	/* (non-Javadoc)
+	 * @see com.cdse.dao.CdseDao#write(java.lang.String, TResource)
+	 */
+	@Override
+	public void insert(TResource inResource) throws IOException {
+		WriteDao<TResource> writeDao = getWriteDaoMap().get("insert");
+		writeDao.execute(inResource);
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.cdse.dao.CdseDao#write(java.lang.String, TResource)
+	 */
+	@Override
+	public void update(TResource inResource) throws IOException {
+		WriteDao<TResource> writeDao = getWriteDaoMap().get("update");
+		writeDao.execute(inResource);
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.cdse.dao.CdseDao#write(java.lang.String, TResource)
+	 */
+	@Override
+	public void delete(TResource inResource) throws IOException {
+		WriteDao<TResource> writeDao = getWriteDaoMap().get("delete");
+		writeDao.execute(inResource);
+	}
+	
+	/* (non-Javadoc)
 	 * @see com.cdse.dao.CdseDao#get(java.lang.String, TResource, TInDto)
 	 */
 	@Override
