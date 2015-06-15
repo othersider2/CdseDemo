@@ -57,54 +57,58 @@
 		</property>
 	</bean>
 
-	<bean id="personReadService" class="com.cdse.service.read.CompositeReadService">
+	<bean id="personReadListService" class="com.cdse.service.read.CompositeReadListService">
 		<property name="readServiceList">
 			<list>
-				<ref bean="dbPersonReadService" />
-				<ref bean="soapPersonReadService" />
-				<ref bean="restPersonReadService" />
+				<ref bean="dbPersonReadListService" />
+				<ref bean="soapPersonReadListService" />
+				<ref bean="restPersonReadListService" />
 			</list>
 		</property>
 	</bean>
 
-
 	<bean id="personService" class="com.cdse.service.ServiceFacade">
-		<property name="readService" ref="personReadService" />
+		<property name="readRecordService" ref="dbPersonReadRecordService" />
+		<property name="readListService" ref="personReadListService" />
 		<property name="writeService" ref="personWriteService" />
+		<lookup-method name="getOutDto" bean="personDto" />
 	</bean>
 
 	<bean id="dbPersonDao" class="com.cdse.dao.DaoFacade">
-		<property name="readDaoMap" ref="readDaoMapTempl" />
+		<property name="readListDaoMap" ref="dbReadListDaoMapTempl" />
+		<property name="readRecordDaoMap" ref="dbReadRecordDaoMapTempl" />
 		<property name="writeDaoMap" ref="writeDaoMapTempl" />
 	</bean>
 
 	<bean id="restPersonDao" class="com.cdse.dao.DaoFacade">
-		<property name="readDaoMap" ref="restReadDaoMapTempl" />
+		<property name="readListDaoMap" ref="restReadListDaoMapTempl" />
 		<property name="writeDaoMap" ref="writeDaoMapTempl" />
 	</bean>
 
 	<bean id="soapPersonDao" class="com.cdse.dao.DaoFacade">
-		<property name="readDaoMap" ref="soapReadDaoMapTempl" />
+		<property name="readListDaoMap" ref="soapReadListDaoMapTempl" />
 		<property name="writeDaoMap" ref="writeDaoMapTempl" />
 	</bean>
 
-	<bean id="dbPersonReadService" class="com.cdse.service.read.ReadServiceImpl">
+	<bean id="dbPersonReadRecordService" class="com.cdse.service.read.ReadRecordServiceImpl">
 		<property name="dao" ref="dbPersonDao" />
-		<lookup-method name="getDomObject" bean="person" />
+		<property name="translator" ref="personTranslator" />
+	</bean>
+
+	<bean id="dbPersonReadListService" class="com.cdse.service.read.ReadListServiceImpl">
+		<property name="dao" ref="dbPersonDao" />
 		<lookup-method name="getOutDto" bean="personDto" />
 		<property name="translator" ref="personTranslator" />
 	</bean>
 
-	<bean id="restPersonReadService" class="com.cdse.service.read.ReadServiceImpl">
+	<bean id="restPersonReadListService" class="com.cdse.service.read.ReadListServiceImpl">
 		<property name="dao" ref="restPersonDao" />
-		<lookup-method name="getDomObject" bean="personRestAdapter" />
 		<lookup-method name="getOutDto" bean="personDto" />
 		<property name="translator" ref="restPersonTranslator" />
 	</bean>
 
-	<bean id="soapPersonReadService" class="com.cdse.service.read.ReadServiceImpl">
+	<bean id="soapPersonReadListService" class="com.cdse.service.read.ReadListServiceImpl">
 		<property name="dao" ref="soapPersonDao" />
-		<lookup-method name="getDomObject" bean="personWsAdapter" />
 		<lookup-method name="getOutDto" bean="personDto" />
 		<property name="translator" ref="soapPersonTranslator" />
 	</bean>
@@ -127,45 +131,53 @@
 	<bean name="/updatePerson.html" class="com.cdse.controller.PersonController" />
 	<bean name="/getUsingId.html" class="com.cdse.controller.PersonController" />
 
-	<util:map id="readDaoMapTempl" map-class="java.util.HashMap"
-		key-type="java.lang.String" value-type="om.cdse.dao.db.DbReadDao">
+	<util:map id="dbReadRecordDaoMapTempl" map-class="java.util.HashMap"
+		key-type="java.lang.String" value-type="com.cdse.dao.ReadRecordDao">
 		<entry>
 			<key>
-				<value>getPersonUsingName</value>
+				<value>getUsingId</value>
+			</key>
+			<ref bean="dbGetPersonUsingId" />
+		</entry>
+	</util:map>
+
+	<util:map id="dbReadListDaoMapTempl" map-class="java.util.HashMap"
+		key-type="java.lang.String" value-type="com.cdse.dao.ReadListDao">
+		<entry>
+			<key>
+				<value>getUsingId</value>
 			</key>
 			<ref bean="getPersonUsingNameQueryImpl" />
 		</entry>
+	</util:map>
+
+	<util:map id="soapReadListDaoMapTempl" map-class="java.util.HashMap"
+		key-type="java.lang.String" value-type="com.cdse.dao.ReadListDao">
 		<entry>
 			<key>
 				<value>getUsingId</value>
 			</key>
-			<ref bean="getUsingId" />
+			<ref bean="soapGetPersonUsingId" />
 		</entry>
 	</util:map>
 
-	<util:map id="soapReadDaoMapTempl" map-class="java.util.HashMap"
-		key-type="java.lang.String" value-type="om.cdse.dao.ReadDao">
+	<util:map id="restReadListDaoMapTempl" map-class="java.util.HashMap"
+		key-type="java.lang.String" value-type="om.cdse.dao.ReadListDao">
 		<entry>
 			<key>
 				<value>getUsingId</value>
 			</key>
-			<ref bean="soapGetUsingId" />
+			<ref bean="restGetPersonUsingId" />
 		</entry>
 	</util:map>
 
-	<util:map id="restReadDaoMapTempl" map-class="java.util.HashMap"
-		key-type="java.lang.String" value-type="om.cdse.dao.ReadDao">
-		<entry>
-			<key>
-				<value>getUsingId</value>
-			</key>
-			<ref bean="restGetUsingId" />
-		</entry>
-	</util:map>
+	<bean id="soapGetPersonUsingId" class="com.cdse.dao.soap.SoapGetPersonUsingId" />
+	<bean id="restGetPersonUsingId" class="com.cdse.dao.rest.RestGetPersonUsingId" />
+	
+	<bean id="dbGetPersonUsingId" class="com.cdse.dao.db.GetUsingId">
+		<lookup-method name="getDomObject" bean="person" />
+	</bean>
 
-	<bean id="soapGetUsingId" class="com.cdse.dao.soap.SoapGetPersonUsingId" />
-	<bean id="restGetUsingId" class="com.cdse.dao.rest.RestGetPersonUsingId" />
-	<bean id="getUsingId" class="com.cdse.dao.db.GetUsingId" />
 	<bean id="getPersonUsingNameQueryImpl" class="com.cdse.dao.db.GetPersonUsingNameQueryImpl" />
 
 	<util:map id="writeDaoMapTempl" map-class="java.util.HashMap"

@@ -12,17 +12,17 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.cdse.dao.ReadDao;
+import com.cdse.dao.ReadListDao;
 import com.cdse.dto.PersonDto;
 
 @Repository
-public class SoapGetPersonUsingId implements ReadDao<PersonWsAdapter, PersonDto> {
+public class SoapGetPersonUsingId implements ReadListDao<PersonWsAdapter, PersonDto> {
 
 	@Autowired
     private SessionFactory sessionFactory;
 
 	@Override
-	public List<PersonWsAdapter> execute(PersonWsAdapter inPrototype, PersonDto inDto) {
+	public List<PersonWsAdapter> execute(PersonDto inDto) {
 		PersonLookup_Service personLookupService = new PersonLookup_Service();
 		PersonLookup personLookup = personLookupService.getPersonLookupPort();
 		PersonListContainer personListContainer = personLookup.getPersonWS(inDto.getId());

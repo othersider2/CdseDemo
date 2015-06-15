@@ -14,17 +14,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 
-import com.cdse.dao.ReadDao;
+import com.cdse.dao.ReadListDao;
 import com.cdse.dto.PersonDto;
 
 @Repository
-public class RestGetPersonUsingId implements ReadDao<PersonRestAdapter, PersonDto> {
+public class RestGetPersonUsingId implements ReadListDao<PersonRestAdapter, PersonDto> {
 
 	@Autowired
     private SessionFactory sessionFactory;
 
 	@Override
-	public List<PersonRestAdapter> execute(PersonRestAdapter inPrototype, PersonDto inDto) {
+	public List<PersonRestAdapter> execute(PersonDto inDto) {
 		RestTemplate restTemplate = new RestTemplate();
 		PersonListContainer personListContainer = restTemplate.getForObject("http://localhost:7001/RestWS/rest/person/" + inDto.getId(), PersonListContainer.class);
 		

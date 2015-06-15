@@ -7,14 +7,19 @@ import java.util.List;
 import java.util.Map;
 
 import com.cdse.dto.Identifiable;
-import com.cdse.service.read.ReadService;
+import com.cdse.service.read.ReadListService;
+import com.cdse.service.read.ReadRecordService;
 import com.cdse.service.write.WriteService;
 
-public class ServiceFacade<TinDto extends Identifiable, TOutDto> implements CdseService<TinDto, TOutDto> {
+public abstract class ServiceFacade<TinDto extends Identifiable, TOutDto> implements CdseService<TinDto, TOutDto> {
 
 	private WriteService<TinDto> writeService;
 
-	private ReadService<TinDto, TOutDto> readService;
+	private ReadListService<TinDto, TOutDto> readListService;
+
+	private ReadRecordService<TinDto, TOutDto> readRecordService;
+
+	protected abstract TOutDto getOutDto();
 
 	/* (non-Javadoc)
 	 * @see com.cdse.service.CdseService#write(java.lang.String, TinDto)
@@ -30,12 +35,13 @@ public class ServiceFacade<TinDto extends Identifiable, TOutDto> implements Cdse
 	@Override
 	public TOutDto get(String inRequstMapping, TinDto inInDto) {
 		
-		TOutDto outDto = null;
+		TOutDto outDto = getOutDto();
 
-		List<TOutDto> list = getList(inRequstMapping, inInDto);
 		try {
-			outDto = list.get(0);
-		} catch (IndexOutOfBoundsException e) {
+			getReadRecordService().execute(inRequstMapping, inInDto, outDto);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		return outDto;
@@ -49,7 +55,7 @@ public class ServiceFacade<TinDto extends Identifiable, TOutDto> implements Cdse
 		
 		Map<String, TOutDto> outDtoMap = new HashMap<String, TOutDto>();
 		try {
-			getReadService().execute(inRequstMapping, inInDto, outDtoMap);
+			getReadListService().execute(inRequstMapping, inInDto, outDtoMap);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -65,12 +71,20 @@ public class ServiceFacade<TinDto extends Identifiable, TOutDto> implements Cdse
 		this.writeService = writeService;
 	}
 
-	public ReadService<TinDto, TOutDto> getReadService() {
-		return readService;
+	public ReadListService<TinDto, TOutDto> getReadListService() {
+		return readListService;
 	}
 
-	public void setReadService(ReadService<TinDto, TOutDto> readService) {
-		this.readService = readService;
+	public void setReadListService(ReadListService<TinDto, TOutDto> readService) {
+		this.readListService = readService;
+	}
+
+	public ReadRecordService<TinDto, TOutDto> getReadRecordService() {
+		return readRecordService;
+	}
+
+	public void setReadRecordService(ReadRecordService<TinDto, TOutDto> readRecordService) {
+		this.readRecordService = readRecordService;
 	}
 	
 }

@@ -10,7 +10,9 @@ public class DaoFacade<TResource, TInDto extends Identifiable> implements CdseDa
 
 	private Map<String, WriteDao<TResource>> writeDaoMap;
 
-	private Map<String, ReadDao<TResource, TInDto>> readDaoMap;
+	private Map<String, ReadRecordDao<TResource, TInDto>> readRecordDaoMap;
+
+	private Map<String, ReadListDao<TResource, TInDto>> readListDaoMap;
 
 	/* (non-Javadoc)
 	 * @see com.cdse.dao.CdseDao#write(java.lang.String, TResource)
@@ -25,36 +27,28 @@ public class DaoFacade<TResource, TInDto extends Identifiable> implements CdseDa
 	 * @see com.cdse.dao.CdseDao#get(java.lang.String, TResource, TInDto)
 	 */
 	@Override
-	public TResource get(String inRequestMapping, TResource inPrototype, TInDto inInDto) throws IOException {
+	public TResource get(String inRequestMapping, TInDto inInDto) throws IOException {
 		
-		TResource outResource = null;
-		
-		List<TResource> list = getList(inRequestMapping, inPrototype, inInDto);
-		try {
-			outResource = list.get(0);
-		} catch (IndexOutOfBoundsException e) {
-		}
-		
-		return outResource;
+		ReadRecordDao<TResource, TInDto> readDao = getReadRecordDaoMap().get(inRequestMapping);
+		return readDao.execute(inInDto);
 	}
 	
 	/* (non-Javadoc)
 	 * @see com.cdse.dao.CdseDao#getList(java.lang.String, TResource, TInDto)
 	 */
 	@Override
-	public List<TResource> getList(String inRequestMapping, TResource inPrototype, TInDto inInDto) throws IOException {
+	public List<TResource> getList(String inRequestMapping, TInDto inInDto) throws IOException {
 		
-		ReadDao<TResource, TInDto> readDao = getReadDaoMap().get(inRequestMapping);
-		List<TResource> subjectList = readDao.execute(inPrototype, inInDto);
-		return subjectList;
+		ReadListDao<TResource, TInDto> readDao = getReadListDaoMap().get(inRequestMapping);
+		return readDao.execute(inInDto);
 	}
 
-	public Map<String, ReadDao<TResource, TInDto>> getReadDaoMap() {
-		return readDaoMap;
+	public Map<String, ReadListDao<TResource, TInDto>> getReadListDaoMap() {
+		return readListDaoMap;
 	}
 
-	public void setReadDaoMap(Map<String, ReadDao<TResource, TInDto>> readDaoMap) {
-		this.readDaoMap = readDaoMap;
+	public void setReadListDaoMap(Map<String, ReadListDao<TResource, TInDto>> readListDaoMap) {
+		this.readListDaoMap = readListDaoMap;
 	}
 
 	public Map<String, WriteDao<TResource>> getWriteDaoMap() {
@@ -63,6 +57,14 @@ public class DaoFacade<TResource, TInDto extends Identifiable> implements CdseDa
 
 	public void setWriteDaoMap(Map<String, WriteDao<TResource>> writeDaoMap) {
 		this.writeDaoMap = writeDaoMap;
+	}
+
+	public Map<String, ReadRecordDao<TResource, TInDto>> getReadRecordDaoMap() {
+		return readRecordDaoMap;
+	}
+
+	public void setReadRecordDaoMap(Map<String, ReadRecordDao<TResource, TInDto>> readRecordDaoMap) {
+		this.readRecordDaoMap = readRecordDaoMap;
 	}
 	
 }
