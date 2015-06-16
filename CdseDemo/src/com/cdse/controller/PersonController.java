@@ -90,5 +90,15 @@ public class PersonController {
 		return model1;
 	}
 	
+	@RequestMapping(value="/getListUsingId.html", method = RequestMethod.POST)
+	public ModelAndView getListPersonForm(@ModelAttribute("person") PersonDto personDto) throws IOException {
+		ModelAndView model1 = null;
+		PersonDto outDto = personService.getList("getUsingId", personDto).get(0);
+		model1 = new ModelAndView("DownloadSuccess");
+		model1.addObject("outPerson", outDto);
+		
+		return model1;
+	}
+	
 }
 

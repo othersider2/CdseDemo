@@ -131,6 +131,7 @@
 	<bean name="/updatePerson.html" class="com.cdse.controller.PersonController" />
 	<bean name="/deletePerson.html" class="com.cdse.controller.PersonController" />
 	<bean name="/getUsingId.html" class="com.cdse.controller.PersonController" />
+	<bean name="/getListUsingId.html" class="com.cdse.controller.PersonController" />
 
 	<util:map id="dbReadRecordDaoMapTempl" map-class="java.util.HashMap"
 		key-type="java.lang.String" value-type="com.cdse.dao.ReadRecordDao">
