@@ -1,8 +1,12 @@
 package com.cdse.service.write;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import org.dozer.DozerBeanMapper;
+import org.dozer.Mapper;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cdse.dao.CdseDao;
@@ -29,6 +33,11 @@ public abstract class WriteServiceImpl<TDom extends CdseEntity, TInDto extends I
 		// copy attributes from DTO to Domain object
 		getTranslator().translateDtoToEntity(domainObject, inDto);
 		
+/*		List<String> dozerMappingList = new ArrayList<String>();
+		dozerMappingList.add("dozerMapping.xml");
+		Mapper mapper = new DozerBeanMapper(dozerMappingList);
+		mapper.map(domainObject, inDto);
+*/		
 		// set the state
 		domainObject.setState(EntityState.NEW);
 		
