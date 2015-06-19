@@ -33,11 +33,11 @@ public abstract class WriteServiceImpl<TDom extends CdseEntity, TInDto extends I
 		// copy attributes from DTO to Domain object
 		getTranslator().translateDtoToEntity(domainObject, inDto);
 		
-/*		List<String> dozerMappingList = new ArrayList<String>();
+		List<String> dozerMappingList = new ArrayList<String>();
 		dozerMappingList.add("dozerMapping.xml");
-		Mapper mapper = new DozerBeanMapper(dozerMappingList);
-		mapper.map(domainObject, inDto);
-*/		
+		Mapper mapper = new DozerBeanMapper();
+		mapper.map(inDto, domainObject);
+		
 		// set the state
 		domainObject.setState(EntityState.NEW);
 		
