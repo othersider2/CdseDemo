@@ -10,7 +10,6 @@ import com.cdse.dao.ReadListDao;
 import com.cdse.domain.Person;
 import com.cdse.dto.PersonDto;
 
-@Repository
 public class GetPersonUsingNameQueryImpl implements ReadListDao<Person, PersonDto> {
 
 	@Autowired

@@ -17,7 +17,6 @@ import org.springframework.web.client.RestTemplate;
 import com.cdse.dao.ReadListDao;
 import com.cdse.dto.PersonDto;
 
-@Repository
 public class RestGetPersonUsingId implements ReadListDao<PersonRestAdapter, PersonDto> {
 
 	@Autowired

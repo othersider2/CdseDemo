@@ -15,7 +15,6 @@ import org.springframework.stereotype.Repository;
 import com.cdse.dao.ReadListDao;
 import com.cdse.dto.PersonDto;
 
-@Repository
 public class SoapGetPersonUsingId implements ReadListDao<PersonWsAdapter, PersonDto> {
 
 	@Autowired

@@ -8,7 +8,6 @@ import com.cdse.dao.ReadRecordDao;
 import com.cdse.domain.CdseEntity;
 import com.cdse.dto.Identifiable;
 
-@Repository
 public abstract class GetUsingId<TDom extends CdseEntity, TDto extends Identifiable> implements ReadRecordDao<TDom, TDto> {
 
 	protected abstract TDom getDomObject();
